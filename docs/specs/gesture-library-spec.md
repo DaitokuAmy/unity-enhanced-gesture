@@ -308,3 +308,14 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - `RectTransform` 版は `Canvas` 文脈のカメラを使い、`GestureCoordinator` の共有カメラには依存しない
 - `Collider` を対象にする別の `Drag` Handler を用意し、こちらは `GestureCoordinator` の共有カメラを使って判定する
 - `GestureCoordinator` の共有カメラは外部へ `public` 公開せず、必要な情報は `GestureEvent` 側へ載せて利用する
+## 追加メモ 2026-04-26
+
+- Runtime 追加対象は `Tap / Pinch / Drag(LongTapDrag)` とする
+- `Tap` は `SingleTap / DoubleTap / LongTap` を 1 つの recognizer で扱う
+- `Tap` の `DoubleTap` 有効時は、1 回目の単一タップ通知を即時送らず待機時間経過後に確定する
+- `Pinch` は 2 pointer を 1 track が所有し、距離に加えて角度も event に含める
+- Editor の pinch simulation は `Alt + MouseDrag` を基準とする
+- 入力履歴サンプルは `GesturePointerSample(Position, ElapsedTime)` に統一する
+- `Drag` は通常開始に加えて `LongTapDrag` 開始経路を持つ
+- `LongTapDrag` が有効な場合でも、通常の drag threshold 到達で通常ドラッグ開始は可能とする
+- Inspector の条件表示は Runtime に無理を入れず Editor 拡張で制御する

@@ -2,6 +2,11 @@ namespace UnityEnhancedGesture {
     /// <summary>
     /// ジェスチャー通知の進行状態
     /// </summary>
+    public enum DragGestureStartMode {
+        Immediate,
+        LongTap,
+    }
+
     public enum GestureEventPhase {
         Began,
         Updated,
@@ -34,5 +39,11 @@ namespace UnityEnhancedGesture {
         Stationary,
         Ended,
         Canceled,
+    }
+
+    public enum TapGestureType {
+        SingleTap,
+        DoubleTap,
+        LongTap,
     }
 }

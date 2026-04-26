@@ -5,28 +5,32 @@ using UnityEngine.InputSystem;
 
 namespace UnityEnhancedGesture {
     /// <summary>
-    /// 入力の収集とジェスチャー配送を統括する中央管理クラス
+    /// 入力取得とジェスチャー配送を統括する中核クラス
     /// </summary>
     [DefaultExecutionOrder(-1000)]
     public sealed class GestureCoordinator : MonoBehaviour {
         private static readonly List<IGestureRecognizer> Recognizers = new() {
             new DragGestureRecognizer(),
+            new TapGestureRecognizer(),
+            new PinchGestureRecognizer(),
         };
 
         private static GestureCoordinator s_instance;
 
-        [SerializeField, Tooltip("入力システムの有効化管理方式")]
+        [SerializeField, Tooltip("入力システムの管理方法")]
         private GestureInputManagementMode _inputManagementMode = GestureInputManagementMode.Automatic;
-        [SerializeField, Tooltip("入力更新の駆動方式")]
+        [SerializeField, Tooltip("入力更新の実行方法")]
         private GestureCoordinatorUpdateMode _updateMode = GestureCoordinatorUpdateMode.Update;
-        [SerializeField, Tooltip("座標判定やレイ生成に利用する共有カメラ")]
+        [SerializeField, Tooltip("3D 判定やレイ変換に使用する共有カメラ")]
         private Camera _eventCamera = null;
 
         private readonly List<IGestureHandler> _handlers = new();
         private readonly Dictionary<int, GesturePointerInput> _inputsByPointerId = new();
-        private readonly Dictionary<int, IGestureTrack> _tracksByPointerId = new();
         private readonly List<GesturePointerInput> _inputBuffer = new();
+        private readonly List<IGestureTrack> _tracks = new();
         private readonly List<IGestureTrack> _trackBuffer = new();
+        private readonly List<IGestureRecognizer> _attachedRecognizerBuffer = new();
+        private readonly GestureSimulationGui _simulationGui = new();
 
         private PointerMouseGestureInputProvider _mouseInputProvider;
         private EnhancedTouchGestureInputProvider _enhancedTouchInputProvider;
@@ -35,7 +39,7 @@ namespace UnityEnhancedGesture {
         private int _lastManualUpdateFrame = -1;
 
         /// <summary>
-        /// 現在の管理インスタンス
+        /// 現在の中核インスタンス
         /// </summary>
         public static GestureCoordinator Instance => s_instance;
 
@@ -56,7 +60,7 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 有効化時に入力管理を初期化
+        /// 有効化時に入力管理を開始
         /// </summary>
         private void OnEnable() {
             if (!Application.isPlaying || s_instance != this) {
@@ -70,7 +74,7 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 無効化時に入力管理を解放
+        /// 無効化時に入力管理を停止
         /// </summary>
         private void OnDisable() {
             if (!Application.isPlaying || s_instance != this || _inputProvider == null) {
@@ -82,7 +86,7 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 破棄時にインスタンス参照を解放
+        /// 破棄時にインスタンス参照を解除
         /// </summary>
         private void OnDestroy() {
             if (s_instance == this) {
@@ -95,10 +99,19 @@ namespace UnityEnhancedGesture {
         /// </summary>
         private void Update() {
             if (_updateMode != GestureCoordinatorUpdateMode.Update) {
+                UpdateSimulationGui();
                 return;
             }
 
             ProcessInput();
+            UpdateSimulationGui();
+        }
+
+        /// <summary>
+        /// GameView 描画を実行
+        /// </summary>
+        private void OnGUI() {
+            _simulationGui.DrawGui();
         }
 
         /// <summary>
@@ -135,14 +148,17 @@ namespace UnityEnhancedGesture {
 
             _lastManualUpdateFrame = Time.frameCount;
             ProcessInput();
+            UpdateSimulationGui();
         }
 
         /// <summary>
-        /// 現在有効な入力解析実装を解決
+        /// 現在使用する入力プロバイダーを解決
         /// </summary>
-        /// <returns>入力解析実装</returns>
+        /// <returns>使用する入力プロバイダー</returns>
         private IGestureInputProvider ResolveInputProvider() {
-            if (_enhancedTouchInputProvider != null && Touchscreen.current != null && _enhancedTouchInputProvider.IsReady(_inputManagementMode)) {
+            if (_enhancedTouchInputProvider != null
+                && Touchscreen.current != null
+                && _enhancedTouchInputProvider.IsReady(_inputManagementMode)) {
                 return _enhancedTouchInputProvider;
             }
 
@@ -154,7 +170,7 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// シーン上の有効ハンドラー登録を同期
+        /// シーン上の有効ハンドラーを再収集
         /// </summary>
         private void RefreshRegisteredHandlers() {
             _handlers.Clear();
@@ -165,7 +181,7 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 入力処理本体
+        /// 入力処理全体を実行
         /// </summary>
         private void ProcessInput() {
             RefreshActiveInputProvider();
@@ -179,15 +195,41 @@ namespace UnityEnhancedGesture {
             CollectTracks();
 
             for (var i = 0; i < _trackBuffer.Count; i++) {
-                var track = _trackBuffer[i];
-
-                if (!_inputsByPointerId.TryGetValue(track.PointerId, out var input)) {
-                    _tracksByPointerId.Remove(track.PointerId);
-                    continue;
-                }
-
-                ProcessTrack(track, input);
+                ProcessTrack(_trackBuffer[i]);
             }
+
+            CleanupCompletedTracks();
+        }
+
+        /// <summary>
+        /// シミュレーション可視化状態を更新
+        /// </summary>
+        private void UpdateSimulationGui() {
+#if UNITY_EDITOR
+            if (_inputProvider is PointerMouseGestureInputProvider mouseInputProvider
+                && mouseInputProvider.TryGetSimulationGuiData(
+                    out var hasMouseCenter,
+                    out var mouseCenter,
+                    out var hasMousePointerPair,
+                    out var mousePrimary,
+                    out var mouseSecondary)) {
+                _simulationGui.SetState(hasMouseCenter, mouseCenter, hasMousePointerPair, mousePrimary, mouseSecondary);
+                return;
+            }
+
+            if (_inputProvider is EnhancedTouchGestureInputProvider enhancedTouchInputProvider
+                && enhancedTouchInputProvider.TryGetSimulationGuiData(
+                    out var hasTouchCenter,
+                    out var touchCenter,
+                    out var hasTouchPointerPair,
+                    out var touchPrimary,
+                    out var touchSecondary)) {
+                _simulationGui.SetState(hasTouchCenter, touchCenter, hasTouchPointerPair, touchPrimary, touchSecondary);
+                return;
+            }
+#endif
+
+            _simulationGui.SetState(false, default, false, default, default);
         }
 
         /// <summary>
@@ -213,7 +255,7 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 現在フレームの入力一覧をキャッシュ
+        /// 現在フレームの入力一覧を構築
         /// </summary>
         private void CacheInputs() {
             _inputBuffer.Clear();
@@ -228,60 +270,74 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 新規入力開始から候補ハンドラーを選択
+        /// 新規開始入力からトラックを生成または既存トラックへ追加
         /// </summary>
         private void HandleInputBegins() {
             foreach (var input in _inputsByPointerId.Values) {
-                if (input.Phase != GestureInputPhase.Began || _tracksByPointerId.ContainsKey(input.PointerId)) {
+                if (input.Phase != GestureInputPhase.Began) {
                     continue;
                 }
 
-                if (!TrySelectHandler(input.Position, out var handler, out var recognizer)) {
-                    continue;
-                }
-
-                var track = recognizer.CreateTrack(handler, input.PointerId, input.StartPosition, input.StartTime, _eventCamera);
-                _tracksByPointerId.Add(input.PointerId, track);
+                TryAddPointerToTracks(input, _attachedRecognizerBuffer);
+                CreateTracksForInput(input, _attachedRecognizerBuffer);
             }
         }
 
         /// <summary>
-        /// 進行中トラック一覧を構築
+        /// 現在処理対象のトラック一覧を構築
         /// </summary>
         private void CollectTracks() {
             _trackBuffer.Clear();
 
-            foreach (var track in _tracksByPointerId.Values) {
-                _trackBuffer.Add(track);
+            for (var i = 0; i < _tracks.Count; i++) {
+                _trackBuffer.Add(_tracks[i]);
             }
         }
 
         /// <summary>
-        /// 優先度に基づいて配送先ハンドラーを選択
+        /// 入力に対して recognizer 系統ごとのトラックを生成
+        /// </summary>
+        /// <param name="input">開始入力</param>
+        /// <param name="attachedRecognizers">追加済み recognizer 一覧</param>
+        private void CreateTracksForInput(GesturePointerInput input, List<IGestureRecognizer> attachedRecognizers) {
+            for (var i = 0; i < Recognizers.Count; i++) {
+                var recognizer = Recognizers[i];
+
+                if (attachedRecognizers.Contains(recognizer) || HasTrackForPointer(recognizer, input.PointerId)) {
+                    continue;
+                }
+
+                if (!TrySelectHandler(input.Position, recognizer, out var handler)) {
+                    continue;
+                }
+
+                _tracks.Add(recognizer.CreateTrack(handler, input, _eventCamera));
+            }
+        }
+
+        /// <summary>
+        /// 指定 recognizer 系統で配送先ハンドラーを選択
         /// </summary>
         /// <param name="screenPosition">開始位置</param>
-        /// <param name="handler">選択されたハンドラー</param>
-        /// <param name="recognizer">選択された認識器</param>
+        /// <param name="recognizer">対象 recognizer</param>
+        /// <param name="handler">選択結果ハンドラー</param>
         /// <returns>選択できた場合は true</returns>
-        private bool TrySelectHandler(Vector2 screenPosition, out IGestureHandler handler, out IGestureRecognizer recognizer) {
+        private bool TrySelectHandler(Vector2 screenPosition, IGestureRecognizer recognizer, out IGestureHandler handler) {
             handler = null;
-            recognizer = null;
             var selectedPriority = int.MinValue;
 
             for (var i = 0; i < _handlers.Count; i++) {
                 var currentHandler = _handlers[i];
 
-                if (currentHandler == null || !currentHandler.IsActiveAndEnabled || !currentHandler.CanHandle(screenPosition, _eventCamera)) {
-                    continue;
-                }
-
-                if (!TryGetRecognizer(currentHandler, out var currentRecognizer)) {
+                if (currentHandler == null
+                    || !currentHandler.IsActiveAndEnabled
+                    || !currentHandler.CanHandle(screenPosition, _eventCamera)
+                    || !recognizer.CanCreateTrack(currentHandler)) {
                     continue;
                 }
 
                 if (handler == null || currentHandler.Priority > selectedPriority) {
                     handler = currentHandler;
-                    recognizer = currentRecognizer;
                     selectedPriority = currentHandler.Priority;
                 }
             }
@@ -293,44 +349,90 @@ namespace UnityEnhancedGesture {
         /// トラックを更新
         /// </summary>
         /// <param name="track">対象トラック</param>
-        /// <param name="input">現在入力</param>
-        private void ProcessTrack(IGestureTrack track, GesturePointerInput input) {
-            if (track == null || track.Recognizer == null) {
-                _tracksByPointerId.Remove(track.PointerId);
+        private void ProcessTrack(IGestureTrack track) {
+            if (track == null || track.Recognizer == null || track.IsCompleted) {
                 return;
             }
 
-            track.Recognizer.ProcessTrack(track, input);
+            track.Recognizer.ProcessTrack(track, _inputsByPointerId, Time.unscaledTime);
+        }
 
-            if (track.IsCompleted) {
-                _tracksByPointerId.Remove(track.PointerId);
+        /// <summary>
+        /// 既存トラックへ新規ポインターを追加
+        /// </summary>
+        /// <param name="input">開始入力</param>
+        /// <param name="attachedRecognizers">追加できた recognizer 一覧</param>
+        private void TryAddPointerToTracks(GesturePointerInput input, List<IGestureRecognizer> attachedRecognizers) {
+            attachedRecognizers.Clear();
+
+            for (var i = 0; i < _tracks.Count; i++) {
+                var track = _tracks[i];
+
+                if (track == null || track.IsCompleted || track.Recognizer == null || HasPointer(track, input.PointerId)) {
+                    continue;
+                }
+
+                if (!track.Recognizer.TryAddPointer(track, input)) {
+                    continue;
+                }
+
+                attachedRecognizers.Add(track.Recognizer);
             }
         }
 
         /// <summary>
-        /// 指定ハンドラーに対応する認識器を取得
+        /// 指定 recognizer 系統で既にポインターを所有するトラックがあるか判定
         /// </summary>
-        /// <param name="handler">対象ハンドラー</param>
-        /// <param name="recognizer">取得結果</param>
-        /// <returns>取得できた場合は true</returns>
-        private bool TryGetRecognizer(IGestureHandler handler, out IGestureRecognizer recognizer) {
-            for (var i = 0; i < Recognizers.Count; i++) {
-                var currentRecognizer = Recognizers[i];
+        /// <param name="recognizer">対象 recognizer</param>
+        /// <param name="pointerId">ポインター ID</param>
+        /// <returns>既に存在する場合は true</returns>
+        private bool HasTrackForPointer(IGestureRecognizer recognizer, int pointerId) {
+            for (var i = 0; i < _tracks.Count; i++) {
+                var track = _tracks[i];
 
-                if (!currentRecognizer.CanCreateTrack(handler)) {
+                if (track == null || track.IsCompleted || !ReferenceEquals(track.Recognizer, recognizer)) {
                     continue;
                 }
 
-                recognizer = currentRecognizer;
-                return true;
+                if (HasPointer(track, pointerId)) {
+                    return true;
+                }
             }
 
-            recognizer = null;
             return false;
         }
 
         /// <summary>
-        /// 現在のデバイス状態に応じて入力解析実装を更新
+        /// トラックが指定ポインターを所有しているか判定
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="pointerId">ポインター ID</param>
+        /// <returns>所有している場合は true</returns>
+        private bool HasPointer(IGestureTrack track, int pointerId) {
+            for (var i = 0; i < track.PointerIds.Count; i++) {
+                if (track.PointerIds[i] == pointerId) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 完了済みトラックを除去
+        /// </summary>
+        private void CleanupCompletedTracks() {
+            for (var i = _tracks.Count - 1; i >= 0; i--) {
+                var track = _tracks[i];
+
+                if (track == null || track.IsCompleted) {
+                    _tracks.RemoveAt(i);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 現在のデバイス状態に応じて入力プロバイダーを更新
         /// </summary>
         private void RefreshActiveInputProvider() {
             var resolvedInputProvider = ResolveInputProvider();

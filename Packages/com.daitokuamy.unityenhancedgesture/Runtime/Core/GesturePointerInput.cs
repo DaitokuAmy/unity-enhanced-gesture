@@ -34,7 +34,7 @@ namespace UnityEnhancedGesture {
         /// <summary>
         /// 開始から現在までの時系列サンプル列
         /// </summary>
-        public DragGestureSample[] Samples { get; }
+        public GesturePointerSample[] Samples { get; }
 
         /// <summary>
         /// 開始時刻
@@ -63,7 +63,7 @@ namespace UnityEnhancedGesture {
             Vector2 startPosition,
             Vector2 position,
             Vector2 delta,
-            DragGestureSample[] samples,
+            GesturePointerSample[] samples,
             float startTime,
             float time) {
             PointerId = pointerId;
@@ -71,7 +71,7 @@ namespace UnityEnhancedGesture {
             StartPosition = startPosition;
             Position = position;
             Delta = delta;
-            Samples = samples ?? Array.Empty<DragGestureSample>();
+            Samples = samples ?? Array.Empty<GesturePointerSample>();
             StartTime = startTime;
             Time = time;
         }

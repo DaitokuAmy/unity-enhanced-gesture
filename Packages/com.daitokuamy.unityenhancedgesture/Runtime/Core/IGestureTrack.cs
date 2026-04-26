@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace UnityEnhancedGesture {
     /// <summary>
     /// 進行中入力トラックの共通契約
@@ -16,7 +18,7 @@ namespace UnityEnhancedGesture {
         /// <summary>
         /// 対応するポインター ID
         /// </summary>
-        int PointerId { get; }
+        IReadOnlyList<int> PointerIds { get; }
 
         /// <summary>
         /// この入力系列に紐づくイベントカメラ

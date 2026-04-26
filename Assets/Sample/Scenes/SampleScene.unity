@@ -214,6 +214,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 615442598}
+  - {fileID: 1376162358}
   - {fileID: 429118336}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -350,6 +351,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 53567094}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &147207689
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +482,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 147207691}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &155316002
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +660,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 155324849}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &167649371
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +791,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 167649373}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &212957271
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,6 +922,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 212957273}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &263923803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,6 +1053,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 263923805}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &285784538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1184,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 285784540}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &301612204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,6 +1315,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 301612206}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &312201373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,6 +1446,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 312201375}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &329021354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,6 +1577,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 329021356}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,12 +1666,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 15, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 772377144}
+  m_Father: {fileID: 726679162}
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -1926,6 +1957,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 375402898}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &380649414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,6 +2088,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 380649416}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &395127515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,6 +2219,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 395127517}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2512,6 +2552,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 519573938}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &615442597
 GameObject:
   m_ObjectHideFlags: 0
@@ -2563,6 +2606,9 @@ MonoBehaviour:
   _priority: 0
   _targetRectTransform: {fileID: 615442598}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 0
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &702665196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2691,6 +2737,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 702665198}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &706555992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,6 +2868,41 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 706555994}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
+--- !u!1 &726679161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 726679162}
+  m_Layer: 0
+  m_Name: Angle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &726679162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726679161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 330585546}
+  m_Father: {fileID: 772377144}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!1 &772377143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,7 +2933,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 330585546}
+  - {fileID: 726679162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &772377145
@@ -2865,6 +2949,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleCamera
   _dragGestureHandlerUI: {fileID: 615442599}
+  _pinchGestureHandlerUI: {fileID: 1376162359}
+  _lookAt: {fileID: 772377144}
+  _distance: {fileID: 330585546}
 --- !u!1 &773530058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,6 +3080,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 773530060}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3170,6 +3260,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 898384031}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &966877546
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,6 +3391,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 966877548}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1029870730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3426,6 +3522,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1029870732}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1130010981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3554,6 +3653,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1130010983}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1185650201
 GameObject:
   m_ObjectHideFlags: 0
@@ -3682,6 +3784,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1185650203}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1196762936
 GameObject:
   m_ObjectHideFlags: 0
@@ -3810,6 +3915,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1196762938}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1231136222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3938,6 +4046,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1231136224}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1263179916
 GameObject:
   m_ObjectHideFlags: 0
@@ -4066,6 +4177,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1263179918}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1263560681
 GameObject:
   m_ObjectHideFlags: 0
@@ -4194,6 +4308,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1263560683}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1287529074
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,6 +4439,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1287529076}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1345788468
 GameObject:
   m_ObjectHideFlags: 0
@@ -4450,6 +4570,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1345788470}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1364713472
 GameObject:
   m_ObjectHideFlags: 0
@@ -4578,6 +4701,60 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1364713474}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
+--- !u!1 &1376162357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376162358}
+  - component: {fileID: 1376162359}
+  m_Layer: 5
+  m_Name: PinchHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1376162358
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376162357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9091529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -125}
+  m_SizeDelta: {x: 0, y: -250}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1376162359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376162357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ce95a962214456bb3209b2b7f2aa48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.PinchGestureHandlerUI
+  _priority: 0
+  _targetRectTransform: {fileID: 1376162358}
+  _pinchStartThreshold: 8
 --- !u!1 &1417639247
 GameObject:
   m_ObjectHideFlags: 0
@@ -4706,6 +4883,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1417639249}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1443942612
 GameObject:
   m_ObjectHideFlags: 0
@@ -4834,6 +5014,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1443942614}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1464135161
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,6 +5145,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1464135163}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1553187543
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,6 +5276,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1553187545}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1563705955
 GameObject:
   m_ObjectHideFlags: 0
@@ -5218,6 +5407,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1563705957}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1565568820
 GameObject:
   m_ObjectHideFlags: 0
@@ -5346,6 +5538,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1565568822}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1589654734
 GameObject:
   m_ObjectHideFlags: 0
@@ -5474,6 +5669,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1589654736}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1599033980
 GameObject:
   m_ObjectHideFlags: 0
@@ -5602,6 +5800,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1599033982}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1712870612
 GameObject:
   m_ObjectHideFlags: 0
@@ -5730,6 +5931,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1712870614}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1736161952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5858,6 +6062,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1736161954}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1790817043
 GameObject:
   m_ObjectHideFlags: 0
@@ -5986,6 +6193,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1790817045}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1815269534
 GameObject:
   m_ObjectHideFlags: 0
@@ -6196,6 +6406,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1848186084}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1903948543
 GameObject:
   m_ObjectHideFlags: 0
@@ -6403,6 +6616,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1936262394}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1945481146
 GameObject:
   m_ObjectHideFlags: 0
@@ -6531,6 +6747,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1945481148}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &1968022665
 GameObject:
   m_ObjectHideFlags: 0
@@ -6659,6 +6878,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 1968022667}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &2001449433
 GameObject:
   m_ObjectHideFlags: 0
@@ -6787,6 +7009,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 2001449435}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &2030691506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6915,6 +7140,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 2030691508}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &2056621632
 GameObject:
   m_ObjectHideFlags: 0
@@ -7043,6 +7271,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 2056621634}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &2116519259
 GameObject:
   m_ObjectHideFlags: 0
@@ -7171,6 +7402,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 2116519261}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &2125198687
 GameObject:
   m_ObjectHideFlags: 0
@@ -7299,6 +7533,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 2125198689}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!1 &2131370020
 GameObject:
   m_ObjectHideFlags: 0
@@ -7427,6 +7664,9 @@ MonoBehaviour:
   _priority: 1
   _targetCollider: {fileID: 2131370022}
   _dragStartThreshold: 12
+  _enableLongTapDrag: 1
+  _longTapDragDuration: 0.5
+  _longTapDragMaxMovement: 12
 --- !u!114 &2131370026
 MonoBehaviour:
   m_ObjectHideFlags: 0

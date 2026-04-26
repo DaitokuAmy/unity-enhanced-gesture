@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
@@ -21,13 +22,21 @@ namespace UnityEnhancedGesture {
         /// <param name="startTime">開始時刻</param>
         /// <param name="eventCamera">イベントに紐づくカメラ</param>
         /// <returns>生成したトラック</returns>
-        IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime, Camera eventCamera);
+        IGestureTrack CreateTrack(IGestureHandler handler, GesturePointerInput input, Camera eventCamera);
+
+        /// <summary>
+        /// 既存トラックへ新規ポインターを追加
+        /// </summary>
+        /// <param name="track">追加先トラック</param>
+        /// <param name="input">開始入力情報</param>
+        /// <returns>追加できた場合は true</returns>
+        bool TryAddPointer(IGestureTrack track, GesturePointerInput input);
 
         /// <summary>
         /// 入力トラックを更新
         /// </summary>
         /// <param name="track">対象トラック</param>
         /// <param name="input">現在の入力情報</param>
-        void ProcessTrack(IGestureTrack track, GesturePointerInput input);
+        void ProcessTrack(IGestureTrack track, IReadOnlyDictionary<int, GesturePointerInput> inputsByPointerId, float currentTime);
     }
 }

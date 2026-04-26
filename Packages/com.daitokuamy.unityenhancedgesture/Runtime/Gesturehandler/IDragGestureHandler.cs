@@ -5,6 +5,12 @@ namespace UnityEnhancedGesture {
     internal interface IDragGestureHandler : IGestureHandler {
         /// <summary>ドラッグ開始しきい値</summary>
         float DragStartThreshold { get; }
+        /// <summary>ロングタップドラッグを有効化するかどうか</summary>
+        bool EnableLongTapDrag { get; }
+        /// <summary>ロングタップドラッグ開始までの待機時間</summary>
+        float LongTapDragDuration { get; }
+        /// <summary>ロングタップドラッグ成立までの許容移動量</summary>
+        float LongTapDragMaxMovement { get; }
 
         /// <summary>
         /// ドラッグ開始通知を受け取る

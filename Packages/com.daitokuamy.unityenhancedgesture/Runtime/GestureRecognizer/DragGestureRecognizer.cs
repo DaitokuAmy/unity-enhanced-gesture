@@ -1,60 +1,61 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
     /// <summary>
-    /// ドラッグ入力を解析する認識器
+    /// ドラッグ入力を解釈する認識器
     /// </summary>
     internal sealed class DragGestureRecognizer : IGestureRecognizer {
         /// <summary>
         /// 進行中ドラッグの内部状態
         /// </summary>
         private sealed class DragGestureTrack : IGestureTrack {
+            private readonly List<int> _pointerIds = new(1);
+
             /// <inheritdoc/>
             public IGestureHandler Handler { get; }
-
             /// <inheritdoc/>
             public IGestureRecognizer Recognizer { get; }
-
             /// <inheritdoc/>
-            public int PointerId { get; }
-
+            public IReadOnlyList<int> PointerIds => _pointerIds;
             /// <inheritdoc/>
             public Camera EventCamera { get; }
-
             /// <inheritdoc/>
             public bool IsCompleted { get; set; }
 
-            /// <summary>
-            /// ドラッグ開始位置
-            /// </summary>
+            /// <summary>ドラッグ開始位置</summary>
             public Vector2 StartPosition { get; }
-
-            /// <summary>
-            /// ドラッグ開始時刻
-            /// </summary>
+            /// <summary>ドラッグ開始時刻</summary>
             public float StartTime { get; }
-
-            /// <summary>
-            /// 開始通知送信済みかどうか
-            /// </summary>
+            /// <summary>開始イベントを送信済みかどうか</summary>
             public bool HasBegun { get; set; }
+            /// <summary>ロングタップドラッグがまだ有効かどうか</summary>
+            public bool CanBeginLongTapDrag { get; set; } = true;
+            /// <summary>ドラッグ開始方式</summary>
+            public DragGestureStartMode StartMode { get; set; }
 
             /// <summary>
-            /// トラックを初期化
+            /// トラックを生成
             /// </summary>
-            /// <param name="recognizer">処理担当認識器</param>
-            /// <param name="handler">配送対象ハンドラー</param>
-            /// <param name="pointerId">ポインター ID</param>
-            /// <param name="startPosition">開始位置</param>
-            /// <param name="startTime">開始時刻</param>
+            /// <param name="recognizer">生成元認識器</param>
+            /// <param name="handler">対象ハンドラー</param>
+            /// <param name="input">開始入力</param>
             /// <param name="eventCamera">イベントに紐づくカメラ</param>
-            public DragGestureTrack(IGestureRecognizer recognizer, IDragGestureHandler handler, int pointerId, Vector2 startPosition, float startTime, Camera eventCamera) {
+            public DragGestureTrack(IGestureRecognizer recognizer, IDragGestureHandler handler, GesturePointerInput input, Camera eventCamera) {
                 Recognizer = recognizer;
                 Handler = handler;
-                PointerId = pointerId;
-                StartPosition = startPosition;
-                StartTime = startTime;
                 EventCamera = eventCamera;
+                StartPosition = input.StartPosition;
+                StartTime = input.StartTime;
+                _pointerIds.Add(input.PointerId);
+            }
+
+            /// <summary>
+            /// 所有ポインター ID を取得
+            /// </summary>
+            /// <returns>所有ポインター ID</returns>
+            public int GetPointerId() {
+                return _pointerIds[0];
             }
         }
 
@@ -64,30 +65,63 @@ namespace UnityEnhancedGesture {
         }
 
         /// <inheritdoc/>
-        public IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime, Camera eventCamera) {
-            return new DragGestureTrack(this, (IDragGestureHandler)handler, pointerId, startPosition, startTime, eventCamera);
+        public IGestureTrack CreateTrack(IGestureHandler handler, GesturePointerInput input, Camera eventCamera) {
+            return new DragGestureTrack(this, (IDragGestureHandler)handler, input, eventCamera);
         }
 
         /// <inheritdoc/>
-        public void ProcessTrack(IGestureTrack track, GesturePointerInput input) {
+        public bool TryAddPointer(IGestureTrack track, GesturePointerInput input) {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public void ProcessTrack(IGestureTrack track, IReadOnlyDictionary<int, GesturePointerInput> inputsByPointerId, float currentTime) {
             var dragTrack = (DragGestureTrack)track;
             var dragHandler = (IDragGestureHandler)dragTrack.Handler;
-            var sentDragEvent = false;
+            var pointerId = dragTrack.GetPointerId();
+
+            if (!inputsByPointerId.TryGetValue(pointerId, out var input)) {
+                return;
+            }
+
+            var elapsedTime = input.Time - dragTrack.StartTime;
             var totalDistance = Vector2.Distance(dragTrack.StartPosition, input.Position);
+            var sentDragEvent = false;
+
+            if (dragHandler.EnableLongTapDrag
+                && dragTrack.CanBeginLongTapDrag
+                && totalDistance > dragHandler.LongTapDragMaxMovement) {
+                dragTrack.CanBeginLongTapDrag = false;
+            }
+
+            if (!dragTrack.HasBegun
+                && dragHandler.EnableLongTapDrag
+                && dragTrack.CanBeginLongTapDrag
+                && elapsedTime >= dragHandler.LongTapDragDuration) {
+                dragTrack.HasBegun = true;
+                dragTrack.StartMode = DragGestureStartMode.LongTap;
+                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began, inputsByPointerId.Count));
+
+                if (input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
+                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, inputsByPointerId.Count));
+                    sentDragEvent = true;
+                }
+            }
 
             if (!dragTrack.HasBegun && totalDistance >= dragHandler.DragStartThreshold) {
                 dragTrack.HasBegun = true;
-                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began));
+                dragTrack.StartMode = DragGestureStartMode.Immediate;
+                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began, inputsByPointerId.Count));
 
                 if (input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
-                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated));
+                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, inputsByPointerId.Count));
                     sentDragEvent = true;
                 }
             }
 
             if (input.Phase == GestureInputPhase.Canceled) {
                 if (dragTrack.HasBegun) {
-                    dragHandler.HandleCancelDrag(CreateEvent(dragTrack, input, GestureEventPhase.Canceled));
+                    dragHandler.HandleCancelDrag(CreateEvent(dragTrack, input, GestureEventPhase.Canceled, inputsByPointerId.Count));
                 }
 
                 dragTrack.IsCompleted = true;
@@ -96,34 +130,40 @@ namespace UnityEnhancedGesture {
 
             if (input.Phase == GestureInputPhase.Ended) {
                 if (dragTrack.HasBegun) {
-                    dragHandler.HandleEndDrag(CreateEvent(dragTrack, input, GestureEventPhase.Completed));
+                    dragHandler.HandleEndDrag(CreateEvent(dragTrack, input, GestureEventPhase.Completed, inputsByPointerId.Count));
                 }
 
                 dragTrack.IsCompleted = true;
                 return;
             }
 
-            if (dragTrack.HasBegun && !sentDragEvent && input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
-                dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated));
+            if (dragTrack.HasBegun
+                && !sentDragEvent
+                && input.Phase == GestureInputPhase.Moved
+                && input.Delta != Vector2.zero) {
+                dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, inputsByPointerId.Count));
             }
         }
 
         /// <summary>
-        /// ドラッグ通知用イベント引数を生成
+        /// ドラッグイベント引数を生成
         /// </summary>
         /// <param name="track">対象トラック</param>
         /// <param name="input">現在入力</param>
-        /// <param name="phase">通知フェーズ</param>
-        /// <returns>イベント引数</returns>
-        private DragGestureEvent CreateEvent(DragGestureTrack track, GesturePointerInput input, GestureEventPhase phase) {
+        /// <param name="phase">イベントフェーズ</param>
+        /// <param name="activePointerCount">現在有効なポインター数</param>
+        /// <returns>生成したイベント引数</returns>
+        private DragGestureEvent CreateEvent(DragGestureTrack track, GesturePointerInput input, GestureEventPhase phase, int activePointerCount) {
             return new DragGestureEvent(
                 phase,
+                track.StartMode,
                 track.StartPosition,
                 input.Position,
                 input.Delta,
                 input.Position - track.StartPosition,
                 input.Samples,
                 input.Time - track.StartTime,
+                activePointerCount,
                 track.EventCamera);
         }
     }
