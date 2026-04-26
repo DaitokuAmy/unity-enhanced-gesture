@@ -66,9 +66,10 @@ namespace UnityEnhancedGesture {
             public void AttachSecondPointer(GesturePointerInput input) {
                 _pointerIds.Add(input.PointerId);
                 SecondPosition = input.Position;
-                StartCenter = GetCenter(FirstPosition, SecondPosition);
+                StartCenter = (FirstPosition + SecondPosition) * 0.5f;
                 StartDistance = Vector2.Distance(FirstPosition, SecondPosition);
-                StartAngle = GetAngle(FirstPosition, SecondPosition);
+                var vector = SecondPosition - FirstPosition;
+                StartAngle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
                 PreviousCenter = StartCenter;
                 PreviousDistance = StartDistance;
                 PreviousAngle = StartAngle;
@@ -251,7 +252,7 @@ namespace UnityEnhancedGesture {
         /// <param name="firstPosition">1点目</param>
         /// <param name="secondPosition">2点目</param>
         /// <returns>中心位置</returns>
-        private static Vector2 GetCenter(Vector2 firstPosition, Vector2 secondPosition) {
+        private Vector2 GetCenter(Vector2 firstPosition, Vector2 secondPosition) {
             return (firstPosition + secondPosition) * 0.5f;
         }
 
@@ -261,7 +262,7 @@ namespace UnityEnhancedGesture {
         /// <param name="firstPosition">1点目</param>
         /// <param name="secondPosition">2点目</param>
         /// <returns>角度</returns>
-        private static float GetAngle(Vector2 firstPosition, Vector2 secondPosition) {
+        private float GetAngle(Vector2 firstPosition, Vector2 secondPosition) {
             var vector = secondPosition - firstPosition;
             return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
         }

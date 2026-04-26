@@ -67,6 +67,7 @@ namespace UnityEnhancedGesture {
                 return;
             }
 
+            ResetProcessingState();
             _enhancedTouchInputProvider.Enable(_inputManagementMode);
             _mouseInputProvider.Enable(_inputManagementMode);
             _inputProvider = ResolveInputProvider();
@@ -83,6 +84,7 @@ namespace UnityEnhancedGesture {
 
             _mouseInputProvider.Disable(_inputManagementMode);
             _enhancedTouchInputProvider.Disable(_inputManagementMode);
+            ResetProcessingState();
         }
 
         /// <summary>
@@ -441,7 +443,21 @@ namespace UnityEnhancedGesture {
                 return;
             }
 
+            ResetProcessingState();
             _inputProvider = resolvedInputProvider;
+        }
+
+        /// <summary>
+        /// 入力処理中の内部状態を初期化
+        /// </summary>
+        private void ResetProcessingState() {
+            _inputsByPointerId.Clear();
+            _inputBuffer.Clear();
+            _tracks.Clear();
+            _trackBuffer.Clear();
+            _attachedRecognizerBuffer.Clear();
+            _hasWarnedInputProviderState = false;
+            _lastManualUpdateFrame = -1;
         }
     }
 }

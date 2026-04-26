@@ -43,5 +43,24 @@ namespace UnityEnhancedGesture {
 
         /// <inheritdoc/>
         public abstract bool CanHandle(Vector2 screenPosition, Camera eventCamera);
+
+        /// <summary>
+        /// RectTransform 判定に使用する Canvas カメラを取得
+        /// </summary>
+        /// <param name="targetRectTransform">対象 RectTransform</param>
+        /// <returns>判定に使用する Canvas カメラ</returns>
+        protected Camera ResolveCanvasCamera(RectTransform targetRectTransform) {
+            if (targetRectTransform == null) {
+                return null;
+            }
+
+            var canvas = targetRectTransform.GetComponentInParent<Canvas>();
+
+            if (canvas == null || canvas.renderMode == RenderMode.ScreenSpaceOverlay) {
+                return null;
+            }
+
+            return canvas.worldCamera;
+        }
     }
 }

@@ -111,14 +111,15 @@ namespace UnityEnhancedGesture {
             }
 
             var primaryInput = results[primaryInputIndex];
-            var secondaryPosition = GetSecondaryPosition(primaryInput.Position, _simulatedStartCenter);
 
             if (!_isSimulatingPinch || _simulatedPrimaryPointerId != primaryInput.PointerId) {
                 BeginSimulation(primaryInput);
-                results.Add(CreateSimulatedInput(GestureInputPhase.Began, secondaryPosition, Vector2.zero, primaryInput.Time));
+                var simulatedSecondaryPosition = GetSecondaryPosition(primaryInput.Position, _simulatedStartCenter);
+                results.Add(CreateSimulatedInput(GestureInputPhase.Began, simulatedSecondaryPosition, Vector2.zero, primaryInput.Time));
                 return;
             }
 
+            var secondaryPosition = GetSecondaryPosition(primaryInput.Position, _simulatedStartCenter);
             var secondaryDelta = secondaryPosition - _previousSecondaryPosition;
             AppendSampleIfNeeded(_simulatedSecondarySamples, secondaryPosition, primaryInput.Time - _simulatedStartTime);
             _previousSecondaryPosition = secondaryPosition;

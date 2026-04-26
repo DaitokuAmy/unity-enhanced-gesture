@@ -34,7 +34,7 @@ namespace UnityEnhancedGesture {
             return RectTransformUtility.RectangleContainsScreenPoint(
                 _targetRectTransform,
                 screenPosition,
-                ResolveCanvasCamera());
+                ResolveCanvasCamera(_targetRectTransform));
         }
 
         /// <inheritdoc/>
@@ -55,20 +55,6 @@ namespace UnityEnhancedGesture {
         /// <inheritdoc/>
         public void HandleCancelPinch(PinchGestureEvent gestureEvent) {
             CancelPinchEvent?.Invoke(gestureEvent);
-        }
-
-        /// <summary>
-        /// 画面座標判定に使用する Canvas カメラを取得
-        /// </summary>
-        /// <returns>判定に使用する Canvas カメラ</returns>
-        private Camera ResolveCanvasCamera() {
-            var canvas = _targetRectTransform.GetComponentInParent<Canvas>();
-
-            if (canvas == null || canvas.renderMode == RenderMode.ScreenSpaceOverlay) {
-                return null;
-            }
-
-            return canvas.worldCamera;
         }
     }
 }

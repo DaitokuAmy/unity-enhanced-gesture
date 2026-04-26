@@ -148,19 +148,19 @@ namespace UnityEnhancedGesture {
             var secondaryDelta = secondaryPosition - _previousSecondaryPosition;
             AppendSampleIfNeeded(_secondarySamples, secondaryPosition, time - _secondaryStartTime);
 
+            if (mouse.leftButton.wasReleasedThisFrame) {
+                results.Add(CreatePrimaryInput(GestureInputPhase.Ended, position, delta, time));
+                results.Add(CreateSecondaryInput(GestureInputPhase.Ended, secondaryPosition, secondaryDelta, time));
+                ResetState();
+                return;
+            }
+
             if (!isAltPressed) {
                 results.Add(CreatePrimaryInput(GetContinuousPhase(delta), position, delta, time));
                 results.Add(CreateSecondaryInput(GestureInputPhase.Ended, secondaryPosition, secondaryDelta, time));
                 _isSimulatingPinch = false;
                 _secondarySamples.Clear();
                 _previousSecondaryPosition = Vector2.zero;
-                return;
-            }
-
-            if (mouse.leftButton.wasReleasedThisFrame) {
-                results.Add(CreatePrimaryInput(GestureInputPhase.Ended, position, delta, time));
-                results.Add(CreateSecondaryInput(GestureInputPhase.Ended, secondaryPosition, secondaryDelta, time));
-                ResetState();
                 return;
             }
 
