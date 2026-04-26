@@ -304,3 +304,7 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 解析機は型ごとにユニークインスタンス管理し、必要に応じてジェスチャー種別専用の入力解析を行えるようにする
 - `Recognizer` は `GestureCoordinator` 側の固定資産として保持し、Handler ごとに生成しない
 - `Recognizer` の解決は `GestureCoordinator` が行い、`Type` ベースの反射生成は使わない
+- `RectTransform` を対象にする `Drag` Handler は、uGUI 前提であることが分かる命名にする
+- `RectTransform` 版は `Canvas` 文脈のカメラを使い、`GestureCoordinator` の共有カメラには依存しない
+- `Collider` を対象にする別の `Drag` Handler を用意し、こちらは `GestureCoordinator` の共有カメラを使って判定する
+- `GestureCoordinator` の共有カメラは外部へ `public` 公開せず、必要な情報は `GestureEvent` 側へ載せて利用する

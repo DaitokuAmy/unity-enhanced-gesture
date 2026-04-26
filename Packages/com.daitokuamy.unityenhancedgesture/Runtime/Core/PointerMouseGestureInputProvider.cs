@@ -9,7 +9,7 @@ namespace UnityEnhancedGesture {
     internal sealed class PointerMouseGestureInputProvider : IGestureInputProvider {
         private const int MousePointerId = -1;
 
-        private readonly List<Vector2> _positions = new();
+        private readonly List<DragGestureSample> _samples = new();
 
         private bool _isPressed;
         private Vector2 _startPosition;
@@ -48,8 +48,8 @@ namespace UnityEnhancedGesture {
                 _isPressed = true;
                 _startPosition = position;
                 _startTime = time;
-                _positions.Clear();
-                AppendPositionIfNeeded(position);
+                _samples.Clear();
+                AppendSampleIfNeeded(position, time);
                 results.Add(CreateInput(GestureInputPhase.Began, position, delta, time));
                 return;
             }
@@ -58,7 +58,7 @@ namespace UnityEnhancedGesture {
                 return;
             }
 
-            AppendPositionIfNeeded(position);
+            AppendSampleIfNeeded(position, time);
 
             if (mouse.leftButton.wasReleasedThisFrame) {
                 results.Add(CreateInput(GestureInputPhase.Ended, position, delta, time));
@@ -91,7 +91,7 @@ namespace UnityEnhancedGesture {
                 _startPosition,
                 position,
                 delta,
-                _positions.ToArray(),
+                _samples.ToArray(),
                 _startTime,
                 time);
         }
@@ -100,12 +100,13 @@ namespace UnityEnhancedGesture {
         /// 直前座標と異なる場合のみ履歴へ追加
         /// </summary>
         /// <param name="position">追加候補</param>
-        private void AppendPositionIfNeeded(Vector2 position) {
-            if (_positions.Count > 0 && _positions[_positions.Count - 1] == position) {
+        /// <param name="time">現在時刻</param>
+        private void AppendSampleIfNeeded(Vector2 position, float time) {
+            if (_samples.Count > 0 && _samples[_samples.Count - 1].Position == position) {
                 return;
             }
 
-            _positions.Add(position);
+            _samples.Add(new DragGestureSample(position, time - _startTime));
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace UnityEnhancedGesture {
             _isPressed = false;
             _startPosition = Vector2.zero;
             _startTime = 0.0f;
-            _positions.Clear();
+            _samples.Clear();
         }
     }
 }

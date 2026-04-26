@@ -19,6 +19,9 @@ namespace UnityEnhancedGesture {
             public int PointerId { get; }
 
             /// <inheritdoc/>
+            public Camera EventCamera { get; }
+
+            /// <inheritdoc/>
             public bool IsCompleted { get; set; }
 
             /// <summary>
@@ -44,12 +47,14 @@ namespace UnityEnhancedGesture {
             /// <param name="pointerId">ポインター ID</param>
             /// <param name="startPosition">開始位置</param>
             /// <param name="startTime">開始時刻</param>
-            public DragGestureTrack(IGestureRecognizer recognizer, IDragGestureHandler handler, int pointerId, Vector2 startPosition, float startTime) {
+            /// <param name="eventCamera">イベントに紐づくカメラ</param>
+            public DragGestureTrack(IGestureRecognizer recognizer, IDragGestureHandler handler, int pointerId, Vector2 startPosition, float startTime, Camera eventCamera) {
                 Recognizer = recognizer;
                 Handler = handler;
                 PointerId = pointerId;
                 StartPosition = startPosition;
                 StartTime = startTime;
+                EventCamera = eventCamera;
             }
         }
 
@@ -59,8 +64,8 @@ namespace UnityEnhancedGesture {
         }
 
         /// <inheritdoc/>
-        public IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime) {
-            return new DragGestureTrack(this, (IDragGestureHandler)handler, pointerId, startPosition, startTime);
+        public IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime, Camera eventCamera) {
+            return new DragGestureTrack(this, (IDragGestureHandler)handler, pointerId, startPosition, startTime, eventCamera);
         }
 
         /// <inheritdoc/>
@@ -117,8 +122,9 @@ namespace UnityEnhancedGesture {
                 input.Position,
                 input.Delta,
                 input.Position - track.StartPosition,
-                input.Positions,
-                input.Time - track.StartTime);
+                input.Samples,
+                input.Time - track.StartTime,
+                track.EventCamera);
         }
     }
 }

@@ -234,6 +234,8 @@ GameObject:
   - component: {fileID: 53567096}
   - component: {fileID: 53567095}
   - component: {fileID: 53567094}
+  - component: {fileID: 53567097}
+  - component: {fileID: 2131370075}
   m_Layer: 0
   m_Name: Cube (49)
   m_TagString: Untagged
@@ -333,6 +335,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53567092}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &53567097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53567092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 53567094}
+  _dragStartThreshold: 12
 --- !u!1 &147207689
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +362,8 @@ GameObject:
   - component: {fileID: 147207693}
   - component: {fileID: 147207692}
   - component: {fileID: 147207691}
+  - component: {fileID: 147207694}
+  - component: {fileID: 2131370074}
   m_Layer: 0
   m_Name: Cube (11)
   m_TagString: Untagged
@@ -444,6 +463,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147207689}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &147207694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147207689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 147207691}
+  _dragStartThreshold: 12
 --- !u!1 &155316002
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +487,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 155316004}
-  - component: {fileID: 155316003}
   - component: {fileID: 155316005}
   m_Layer: 0
   m_Name: Sample
@@ -462,19 +495,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &155316003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 155316002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87eccdeecbc33044789c5b60e1d9376d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Sample
-  _dragHandler: {fileID: 615442599}
 --- !u!4 &155316004
 Transform:
   m_ObjectHideFlags: 0
@@ -504,7 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.GestureCoordinator
   _inputManagementMode: 0
   _updateMode: 0
-  _useEditorTouchSimulation: 1
+  _eventCamera: {fileID: 330585545}
 --- !u!1 &155324847
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +537,8 @@ GameObject:
   - component: {fileID: 155324851}
   - component: {fileID: 155324850}
   - component: {fileID: 155324849}
+  - component: {fileID: 155324852}
+  - component: {fileID: 2131370073}
   m_Layer: 0
   m_Name: Cube (16)
   m_TagString: Untagged
@@ -616,6 +638,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155324847}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &155324852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155324847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 155324849}
+  _dragStartThreshold: 12
 --- !u!1 &167649371
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +665,8 @@ GameObject:
   - component: {fileID: 167649375}
   - component: {fileID: 167649374}
   - component: {fileID: 167649373}
+  - component: {fileID: 167649376}
+  - component: {fileID: 2131370072}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -727,6 +766,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167649371}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &167649376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167649371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 167649373}
+  _dragStartThreshold: 12
 --- !u!1 &212957271
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,6 +793,8 @@ GameObject:
   - component: {fileID: 212957275}
   - component: {fileID: 212957274}
   - component: {fileID: 212957273}
+  - component: {fileID: 212957276}
+  - component: {fileID: 2131370071}
   m_Layer: 0
   m_Name: Cube (43)
   m_TagString: Untagged
@@ -838,6 +894,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212957271}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &212957276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212957271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 212957273}
+  _dragStartThreshold: 12
 --- !u!1 &263923803
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +921,8 @@ GameObject:
   - component: {fileID: 263923807}
   - component: {fileID: 263923806}
   - component: {fileID: 263923805}
+  - component: {fileID: 263923808}
+  - component: {fileID: 2131370070}
   m_Layer: 0
   m_Name: Cube (26)
   m_TagString: Untagged
@@ -949,6 +1022,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263923803}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &263923808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263923803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 263923805}
+  _dragStartThreshold: 12
 --- !u!1 &285784538
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,6 +1049,8 @@ GameObject:
   - component: {fileID: 285784542}
   - component: {fileID: 285784541}
   - component: {fileID: 285784540}
+  - component: {fileID: 285784543}
+  - component: {fileID: 2131370069}
   m_Layer: 0
   m_Name: Cube (19)
   m_TagString: Untagged
@@ -1060,6 +1150,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285784538}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &285784543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285784538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 285784540}
+  _dragStartThreshold: 12
 --- !u!1 &301612204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,6 +1177,8 @@ GameObject:
   - component: {fileID: 301612208}
   - component: {fileID: 301612207}
   - component: {fileID: 301612206}
+  - component: {fileID: 301612209}
+  - component: {fileID: 2131370068}
   m_Layer: 0
   m_Name: Cube (23)
   m_TagString: Untagged
@@ -1171,6 +1278,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301612204}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &301612209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301612204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 301612206}
+  _dragStartThreshold: 12
 --- !u!1 &312201373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1305,8 @@ GameObject:
   - component: {fileID: 312201377}
   - component: {fileID: 312201376}
   - component: {fileID: 312201375}
+  - component: {fileID: 312201378}
+  - component: {fileID: 2131370067}
   m_Layer: 0
   m_Name: Cube (9)
   m_TagString: Untagged
@@ -1282,6 +1406,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312201373}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &312201378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312201373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 312201375}
+  _dragStartThreshold: 12
 --- !u!1 &329021354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,6 +1433,8 @@ GameObject:
   - component: {fileID: 329021358}
   - component: {fileID: 329021357}
   - component: {fileID: 329021356}
+  - component: {fileID: 329021359}
+  - component: {fileID: 2131370066}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -1393,6 +1534,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329021354}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &329021359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329021354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 329021356}
+  _dragStartThreshold: 12
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,6 +1810,8 @@ GameObject:
   - component: {fileID: 375402900}
   - component: {fileID: 375402899}
   - component: {fileID: 375402898}
+  - component: {fileID: 375402901}
+  - component: {fileID: 2131370065}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1753,6 +1911,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375402896}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &375402901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375402896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 375402898}
+  _dragStartThreshold: 12
 --- !u!1 &380649414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,6 +1938,8 @@ GameObject:
   - component: {fileID: 380649418}
   - component: {fileID: 380649417}
   - component: {fileID: 380649416}
+  - component: {fileID: 380649419}
+  - component: {fileID: 2131370064}
   m_Layer: 0
   m_Name: Cube (44)
   m_TagString: Untagged
@@ -1864,6 +2039,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380649414}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &380649419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380649414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 380649416}
+  _dragStartThreshold: 12
 --- !u!1 &395127515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,6 +2066,8 @@ GameObject:
   - component: {fileID: 395127519}
   - component: {fileID: 395127518}
   - component: {fileID: 395127517}
+  - component: {fileID: 395127520}
+  - component: {fileID: 2131370063}
   m_Layer: 0
   m_Name: Cube (35)
   m_TagString: Untagged
@@ -1975,6 +2167,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395127515}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &395127520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395127515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 395127517}
+  _dragStartThreshold: 12
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,6 +2396,8 @@ GameObject:
   - component: {fileID: 519573940}
   - component: {fileID: 519573939}
   - component: {fileID: 519573938}
+  - component: {fileID: 519573941}
+  - component: {fileID: 2131370062}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -2288,6 +2497,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519573936}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &519573941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519573936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 519573938}
+  _dragStartThreshold: 12
 --- !u!1 &615442597
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,7 +2559,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e02d7cb2b5b71942bcada039e3b62a1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandlerUI
   _priority: 0
   _targetRectTransform: {fileID: 615442598}
   _dragStartThreshold: 12
@@ -2351,6 +2575,8 @@ GameObject:
   - component: {fileID: 702665200}
   - component: {fileID: 702665199}
   - component: {fileID: 702665198}
+  - component: {fileID: 702665201}
+  - component: {fileID: 2131370061}
   m_Layer: 0
   m_Name: Cube (32)
   m_TagString: Untagged
@@ -2450,6 +2676,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702665196}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &702665201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702665196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 702665198}
+  _dragStartThreshold: 12
 --- !u!1 &706555992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2462,6 +2703,8 @@ GameObject:
   - component: {fileID: 706555996}
   - component: {fileID: 706555995}
   - component: {fileID: 706555994}
+  - component: {fileID: 706555997}
+  - component: {fileID: 2131370060}
   m_Layer: 0
   m_Name: Cube (36)
   m_TagString: Untagged
@@ -2561,6 +2804,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 706555992}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &706555997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706555992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 706555994}
+  _dragStartThreshold: 12
 --- !u!1 &772377143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,6 +2828,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 772377144}
+  - component: {fileID: 772377145}
   m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
@@ -2593,6 +2852,19 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &772377145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772377143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eccdeecbc33044789c5b60e1d9376d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCamera
+  _dragGestureHandlerUI: {fileID: 615442599}
 --- !u!1 &773530058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2605,6 +2877,8 @@ GameObject:
   - component: {fileID: 773530062}
   - component: {fileID: 773530061}
   - component: {fileID: 773530060}
+  - component: {fileID: 773530063}
+  - component: {fileID: 2131370059}
   m_Layer: 0
   m_Name: Cube (27)
   m_TagString: Untagged
@@ -2704,6 +2978,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773530058}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &773530063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773530058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 773530060}
+  _dragStartThreshold: 12
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2765,6 +3054,8 @@ GameObject:
   - component: {fileID: 898384033}
   - component: {fileID: 898384032}
   - component: {fileID: 898384031}
+  - component: {fileID: 898384034}
+  - component: {fileID: 2131370058}
   m_Layer: 0
   m_Name: Cube (37)
   m_TagString: Untagged
@@ -2864,6 +3155,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 898384029}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &898384034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898384029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 898384031}
+  _dragStartThreshold: 12
 --- !u!1 &966877546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2876,6 +3182,8 @@ GameObject:
   - component: {fileID: 966877550}
   - component: {fileID: 966877549}
   - component: {fileID: 966877548}
+  - component: {fileID: 966877551}
+  - component: {fileID: 2131370057}
   m_Layer: 0
   m_Name: Cube (25)
   m_TagString: Untagged
@@ -2975,6 +3283,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966877546}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &966877551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966877546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 966877548}
+  _dragStartThreshold: 12
 --- !u!1 &1029870730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,6 +3310,8 @@ GameObject:
   - component: {fileID: 1029870734}
   - component: {fileID: 1029870733}
   - component: {fileID: 1029870732}
+  - component: {fileID: 1029870735}
+  - component: {fileID: 2131370056}
   m_Layer: 0
   m_Name: Cube (34)
   m_TagString: Untagged
@@ -3086,6 +3411,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029870730}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1029870735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029870730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1029870732}
+  _dragStartThreshold: 12
 --- !u!1 &1130010981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,6 +3438,8 @@ GameObject:
   - component: {fileID: 1130010985}
   - component: {fileID: 1130010984}
   - component: {fileID: 1130010983}
+  - component: {fileID: 1130010986}
+  - component: {fileID: 2131370055}
   m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Untagged
@@ -3197,6 +3539,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130010981}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1130010986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130010981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1130010983}
+  _dragStartThreshold: 12
 --- !u!1 &1185650201
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,6 +3566,8 @@ GameObject:
   - component: {fileID: 1185650205}
   - component: {fileID: 1185650204}
   - component: {fileID: 1185650203}
+  - component: {fileID: 1185650206}
+  - component: {fileID: 2131370054}
   m_Layer: 0
   m_Name: Cube (47)
   m_TagString: Untagged
@@ -3308,6 +3667,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185650201}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1185650206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185650201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1185650203}
+  _dragStartThreshold: 12
 --- !u!1 &1196762936
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,6 +3694,8 @@ GameObject:
   - component: {fileID: 1196762940}
   - component: {fileID: 1196762939}
   - component: {fileID: 1196762938}
+  - component: {fileID: 1196762941}
+  - component: {fileID: 2131370053}
   m_Layer: 0
   m_Name: Cube (22)
   m_TagString: Untagged
@@ -3419,6 +3795,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1196762936}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1196762941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196762936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1196762938}
+  _dragStartThreshold: 12
 --- !u!1 &1231136222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3431,6 +3822,8 @@ GameObject:
   - component: {fileID: 1231136226}
   - component: {fileID: 1231136225}
   - component: {fileID: 1231136224}
+  - component: {fileID: 1231136227}
+  - component: {fileID: 2131370052}
   m_Layer: 0
   m_Name: Cube (13)
   m_TagString: Untagged
@@ -3530,6 +3923,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231136222}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1231136227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231136222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1231136224}
+  _dragStartThreshold: 12
 --- !u!1 &1263179916
 GameObject:
   m_ObjectHideFlags: 0
@@ -3542,6 +3950,8 @@ GameObject:
   - component: {fileID: 1263179920}
   - component: {fileID: 1263179919}
   - component: {fileID: 1263179918}
+  - component: {fileID: 1263179921}
+  - component: {fileID: 2131370051}
   m_Layer: 0
   m_Name: Cube (40)
   m_TagString: Untagged
@@ -3641,6 +4051,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263179916}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1263179921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263179916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1263179918}
+  _dragStartThreshold: 12
 --- !u!1 &1263560681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3653,6 +4078,8 @@ GameObject:
   - component: {fileID: 1263560685}
   - component: {fileID: 1263560684}
   - component: {fileID: 1263560683}
+  - component: {fileID: 1263560686}
+  - component: {fileID: 2131370050}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -3752,6 +4179,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263560681}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1263560686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263560681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1263560683}
+  _dragStartThreshold: 12
 --- !u!1 &1287529074
 GameObject:
   m_ObjectHideFlags: 0
@@ -3764,6 +4206,8 @@ GameObject:
   - component: {fileID: 1287529078}
   - component: {fileID: 1287529077}
   - component: {fileID: 1287529076}
+  - component: {fileID: 1287529079}
+  - component: {fileID: 2131370049}
   m_Layer: 0
   m_Name: Cube (39)
   m_TagString: Untagged
@@ -3863,6 +4307,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287529074}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1287529079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287529074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1287529076}
+  _dragStartThreshold: 12
 --- !u!1 &1345788468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3875,6 +4334,8 @@ GameObject:
   - component: {fileID: 1345788472}
   - component: {fileID: 1345788471}
   - component: {fileID: 1345788470}
+  - component: {fileID: 1345788473}
+  - component: {fileID: 2131370048}
   m_Layer: 0
   m_Name: Cube (12)
   m_TagString: Untagged
@@ -3974,6 +4435,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345788468}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1345788473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345788468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1345788470}
+  _dragStartThreshold: 12
 --- !u!1 &1364713472
 GameObject:
   m_ObjectHideFlags: 0
@@ -3986,6 +4462,8 @@ GameObject:
   - component: {fileID: 1364713476}
   - component: {fileID: 1364713475}
   - component: {fileID: 1364713474}
+  - component: {fileID: 1364713477}
+  - component: {fileID: 2131370047}
   m_Layer: 0
   m_Name: Cube (20)
   m_TagString: Untagged
@@ -4085,6 +4563,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364713472}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1364713477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364713472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1364713474}
+  _dragStartThreshold: 12
 --- !u!1 &1417639247
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,6 +4590,8 @@ GameObject:
   - component: {fileID: 1417639251}
   - component: {fileID: 1417639250}
   - component: {fileID: 1417639249}
+  - component: {fileID: 1417639252}
+  - component: {fileID: 2131370046}
   m_Layer: 0
   m_Name: Cube (45)
   m_TagString: Untagged
@@ -4196,6 +4691,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417639247}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1417639252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417639247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1417639249}
+  _dragStartThreshold: 12
 --- !u!1 &1443942612
 GameObject:
   m_ObjectHideFlags: 0
@@ -4208,6 +4718,8 @@ GameObject:
   - component: {fileID: 1443942616}
   - component: {fileID: 1443942615}
   - component: {fileID: 1443942614}
+  - component: {fileID: 1443942617}
+  - component: {fileID: 2131370045}
   m_Layer: 0
   m_Name: Cube (10)
   m_TagString: Untagged
@@ -4307,6 +4819,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443942612}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1443942617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443942612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1443942614}
+  _dragStartThreshold: 12
 --- !u!1 &1464135161
 GameObject:
   m_ObjectHideFlags: 0
@@ -4319,6 +4846,8 @@ GameObject:
   - component: {fileID: 1464135165}
   - component: {fileID: 1464135164}
   - component: {fileID: 1464135163}
+  - component: {fileID: 1464135166}
+  - component: {fileID: 2131370044}
   m_Layer: 0
   m_Name: Cube (31)
   m_TagString: Untagged
@@ -4418,6 +4947,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464135161}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1464135166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464135161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1464135163}
+  _dragStartThreshold: 12
 --- !u!1 &1553187543
 GameObject:
   m_ObjectHideFlags: 0
@@ -4430,6 +4974,8 @@ GameObject:
   - component: {fileID: 1553187547}
   - component: {fileID: 1553187546}
   - component: {fileID: 1553187545}
+  - component: {fileID: 1553187548}
+  - component: {fileID: 2131370043}
   m_Layer: 0
   m_Name: Cube (41)
   m_TagString: Untagged
@@ -4529,6 +5075,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553187543}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1553187548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553187543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1553187545}
+  _dragStartThreshold: 12
 --- !u!1 &1563705955
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,6 +5102,8 @@ GameObject:
   - component: {fileID: 1563705959}
   - component: {fileID: 1563705958}
   - component: {fileID: 1563705957}
+  - component: {fileID: 1563705960}
+  - component: {fileID: 2131370042}
   m_Layer: 0
   m_Name: Cube (46)
   m_TagString: Untagged
@@ -4640,6 +5203,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563705955}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1563705960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563705955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1563705957}
+  _dragStartThreshold: 12
 --- !u!1 &1565568820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,6 +5230,8 @@ GameObject:
   - component: {fileID: 1565568824}
   - component: {fileID: 1565568823}
   - component: {fileID: 1565568822}
+  - component: {fileID: 1565568825}
+  - component: {fileID: 2131370041}
   m_Layer: 0
   m_Name: Cube (15)
   m_TagString: Untagged
@@ -4751,6 +5331,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565568820}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1565568825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565568820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1565568822}
+  _dragStartThreshold: 12
 --- !u!1 &1589654734
 GameObject:
   m_ObjectHideFlags: 0
@@ -4763,6 +5358,8 @@ GameObject:
   - component: {fileID: 1589654738}
   - component: {fileID: 1589654737}
   - component: {fileID: 1589654736}
+  - component: {fileID: 1589654739}
+  - component: {fileID: 2131370040}
   m_Layer: 0
   m_Name: Cube (28)
   m_TagString: Untagged
@@ -4862,6 +5459,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589654734}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1589654739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589654734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1589654736}
+  _dragStartThreshold: 12
 --- !u!1 &1599033980
 GameObject:
   m_ObjectHideFlags: 0
@@ -4874,6 +5486,8 @@ GameObject:
   - component: {fileID: 1599033984}
   - component: {fileID: 1599033983}
   - component: {fileID: 1599033982}
+  - component: {fileID: 1599033985}
+  - component: {fileID: 2131370039}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -4973,6 +5587,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599033980}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1599033985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599033980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1599033982}
+  _dragStartThreshold: 12
 --- !u!1 &1712870612
 GameObject:
   m_ObjectHideFlags: 0
@@ -4985,6 +5614,8 @@ GameObject:
   - component: {fileID: 1712870616}
   - component: {fileID: 1712870615}
   - component: {fileID: 1712870614}
+  - component: {fileID: 1712870617}
+  - component: {fileID: 2131370038}
   m_Layer: 0
   m_Name: Cube (24)
   m_TagString: Untagged
@@ -5084,6 +5715,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712870612}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1712870617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712870612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1712870614}
+  _dragStartThreshold: 12
 --- !u!1 &1736161952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5096,6 +5742,8 @@ GameObject:
   - component: {fileID: 1736161956}
   - component: {fileID: 1736161955}
   - component: {fileID: 1736161954}
+  - component: {fileID: 1736161957}
+  - component: {fileID: 2131370037}
   m_Layer: 0
   m_Name: Cube (17)
   m_TagString: Untagged
@@ -5195,6 +5843,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736161952}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1736161957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736161952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1736161954}
+  _dragStartThreshold: 12
 --- !u!1 &1790817043
 GameObject:
   m_ObjectHideFlags: 0
@@ -5207,6 +5870,8 @@ GameObject:
   - component: {fileID: 1790817047}
   - component: {fileID: 1790817046}
   - component: {fileID: 1790817045}
+  - component: {fileID: 1790817048}
+  - component: {fileID: 2131370036}
   m_Layer: 0
   m_Name: Cube (33)
   m_TagString: Untagged
@@ -5306,6 +5971,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790817043}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1790817048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790817043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1790817045}
+  _dragStartThreshold: 12
 --- !u!1 &1815269534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,6 +6080,8 @@ GameObject:
   - component: {fileID: 1848186086}
   - component: {fileID: 1848186085}
   - component: {fileID: 1848186084}
+  - component: {fileID: 1848186087}
+  - component: {fileID: 2131370035}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -5499,6 +6181,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848186082}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1848186087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848186082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1848186084}
+  _dragStartThreshold: 12
 --- !u!1 &1903948543
 GameObject:
   m_ObjectHideFlags: 0
@@ -5590,6 +6287,8 @@ GameObject:
   - component: {fileID: 1936262396}
   - component: {fileID: 1936262395}
   - component: {fileID: 1936262394}
+  - component: {fileID: 1936262397}
+  - component: {fileID: 2131370034}
   m_Layer: 0
   m_Name: Cube (42)
   m_TagString: Untagged
@@ -5689,6 +6388,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936262392}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1936262397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936262392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1936262394}
+  _dragStartThreshold: 12
 --- !u!1 &1945481146
 GameObject:
   m_ObjectHideFlags: 0
@@ -5701,6 +6415,8 @@ GameObject:
   - component: {fileID: 1945481150}
   - component: {fileID: 1945481149}
   - component: {fileID: 1945481148}
+  - component: {fileID: 1945481151}
+  - component: {fileID: 2131370033}
   m_Layer: 0
   m_Name: Cube (14)
   m_TagString: Untagged
@@ -5800,6 +6516,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945481146}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1945481151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945481146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1945481148}
+  _dragStartThreshold: 12
 --- !u!1 &1968022665
 GameObject:
   m_ObjectHideFlags: 0
@@ -5812,6 +6543,8 @@ GameObject:
   - component: {fileID: 1968022669}
   - component: {fileID: 1968022668}
   - component: {fileID: 1968022667}
+  - component: {fileID: 1968022670}
+  - component: {fileID: 2131370032}
   m_Layer: 0
   m_Name: Cube (21)
   m_TagString: Untagged
@@ -5911,6 +6644,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968022665}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1968022670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968022665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 1968022667}
+  _dragStartThreshold: 12
 --- !u!1 &2001449433
 GameObject:
   m_ObjectHideFlags: 0
@@ -5923,6 +6671,8 @@ GameObject:
   - component: {fileID: 2001449437}
   - component: {fileID: 2001449436}
   - component: {fileID: 2001449435}
+  - component: {fileID: 2001449438}
+  - component: {fileID: 2131370031}
   m_Layer: 0
   m_Name: Cube (38)
   m_TagString: Untagged
@@ -6022,6 +6772,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001449433}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2001449438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001449433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 2001449435}
+  _dragStartThreshold: 12
 --- !u!1 &2030691506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6034,6 +6799,8 @@ GameObject:
   - component: {fileID: 2030691510}
   - component: {fileID: 2030691509}
   - component: {fileID: 2030691508}
+  - component: {fileID: 2030691511}
+  - component: {fileID: 2131370030}
   m_Layer: 0
   m_Name: Cube (29)
   m_TagString: Untagged
@@ -6133,6 +6900,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030691506}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2030691511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030691506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 2030691508}
+  _dragStartThreshold: 12
 --- !u!1 &2056621632
 GameObject:
   m_ObjectHideFlags: 0
@@ -6145,6 +6927,8 @@ GameObject:
   - component: {fileID: 2056621636}
   - component: {fileID: 2056621635}
   - component: {fileID: 2056621634}
+  - component: {fileID: 2056621637}
+  - component: {fileID: 2131370029}
   m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Untagged
@@ -6244,6 +7028,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056621632}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2056621637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056621632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 2056621634}
+  _dragStartThreshold: 12
 --- !u!1 &2116519259
 GameObject:
   m_ObjectHideFlags: 0
@@ -6256,6 +7055,8 @@ GameObject:
   - component: {fileID: 2116519263}
   - component: {fileID: 2116519262}
   - component: {fileID: 2116519261}
+  - component: {fileID: 2116519264}
+  - component: {fileID: 2131370028}
   m_Layer: 0
   m_Name: Cube (48)
   m_TagString: Untagged
@@ -6355,6 +7156,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116519259}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2116519264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116519259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 2116519261}
+  _dragStartThreshold: 12
 --- !u!1 &2125198687
 GameObject:
   m_ObjectHideFlags: 0
@@ -6367,6 +7183,8 @@ GameObject:
   - component: {fileID: 2125198691}
   - component: {fileID: 2125198690}
   - component: {fileID: 2125198689}
+  - component: {fileID: 2125198692}
+  - component: {fileID: 2131370027}
   m_Layer: 0
   m_Name: Cube (30)
   m_TagString: Untagged
@@ -6466,6 +7284,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125198687}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2125198692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125198687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 2125198689}
+  _dragStartThreshold: 12
 --- !u!1 &2131370020
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,6 +7311,8 @@ GameObject:
   - component: {fileID: 2131370024}
   - component: {fileID: 2131370023}
   - component: {fileID: 2131370022}
+  - component: {fileID: 2131370025}
+  - component: {fileID: 2131370026}
   m_Layer: 0
   m_Name: Cube (18)
   m_TagString: Untagged
@@ -6577,6 +7412,671 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131370020}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2131370025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131370020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
+  _priority: 1
+  _targetCollider: {fileID: 2131370022}
+  _dragStartThreshold: 12
+--- !u!114 &2131370026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131370020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 2131370025}
+--- !u!114 &2131370027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125198687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 2125198692}
+--- !u!114 &2131370028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116519259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 2116519264}
+--- !u!114 &2131370029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056621632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 2056621637}
+--- !u!114 &2131370030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030691506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 2030691511}
+--- !u!114 &2131370031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001449433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 2001449438}
+--- !u!114 &2131370032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968022665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1968022670}
+--- !u!114 &2131370033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945481146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1945481151}
+--- !u!114 &2131370034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936262392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1936262397}
+--- !u!114 &2131370035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848186082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1848186087}
+--- !u!114 &2131370036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790817043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1790817048}
+--- !u!114 &2131370037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736161952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1736161957}
+--- !u!114 &2131370038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712870612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1712870617}
+--- !u!114 &2131370039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599033980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1599033985}
+--- !u!114 &2131370040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589654734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1589654739}
+--- !u!114 &2131370041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565568820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1565568825}
+--- !u!114 &2131370042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563705955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1563705960}
+--- !u!114 &2131370043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553187543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1553187548}
+--- !u!114 &2131370044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464135161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1464135166}
+--- !u!114 &2131370045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443942612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1443942617}
+--- !u!114 &2131370046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417639247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1417639252}
+--- !u!114 &2131370047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364713472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1364713477}
+--- !u!114 &2131370048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345788468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1345788473}
+--- !u!114 &2131370049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287529074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1287529079}
+--- !u!114 &2131370050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263560681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1263560686}
+--- !u!114 &2131370051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263179916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1263179921}
+--- !u!114 &2131370052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231136222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1231136227}
+--- !u!114 &2131370053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196762936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1196762941}
+--- !u!114 &2131370054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185650201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1185650206}
+--- !u!114 &2131370055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130010981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1130010986}
+--- !u!114 &2131370056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029870730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 1029870735}
+--- !u!114 &2131370057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966877546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 966877551}
+--- !u!114 &2131370058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898384029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 898384034}
+--- !u!114 &2131370059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773530058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 773530063}
+--- !u!114 &2131370060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706555992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 706555997}
+--- !u!114 &2131370061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702665196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 702665201}
+--- !u!114 &2131370062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519573936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 519573941}
+--- !u!114 &2131370063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395127515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 395127520}
+--- !u!114 &2131370064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380649414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 380649419}
+--- !u!114 &2131370065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375402896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 375402901}
+--- !u!114 &2131370066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329021354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 329021359}
+--- !u!114 &2131370067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312201373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 312201378}
+--- !u!114 &2131370068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301612204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 301612209}
+--- !u!114 &2131370069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285784538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 285784543}
+--- !u!114 &2131370070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263923803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 263923808}
+--- !u!114 &2131370071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212957271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 212957276}
+--- !u!114 &2131370072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167649371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 167649376}
+--- !u!114 &2131370073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155324847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 155324852}
+--- !u!114 &2131370074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147207689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 147207694}
+--- !u!114 &2131370075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53567092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbd9937fdc046cbb3ca211f26e9cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleCube
+  _dragGestureHandler3D: {fileID: 53567097}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

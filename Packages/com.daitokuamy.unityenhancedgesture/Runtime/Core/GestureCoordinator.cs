@@ -19,6 +19,8 @@ namespace UnityEnhancedGesture {
         private GestureInputManagementMode _inputManagementMode = GestureInputManagementMode.Automatic;
         [SerializeField, Tooltip("入力更新の駆動方式")]
         private GestureCoordinatorUpdateMode _updateMode = GestureCoordinatorUpdateMode.Update;
+        [SerializeField, Tooltip("座標判定やレイ生成に利用する共有カメラ")]
+        private Camera _eventCamera = null;
 
         private readonly List<IGestureHandler> _handlers = new();
         private readonly Dictionary<int, GesturePointerInput> _inputsByPointerId = new();
@@ -238,7 +240,7 @@ namespace UnityEnhancedGesture {
                     continue;
                 }
 
-                var track = recognizer.CreateTrack(handler, input.PointerId, input.StartPosition, input.StartTime);
+                var track = recognizer.CreateTrack(handler, input.PointerId, input.StartPosition, input.StartTime, _eventCamera);
                 _tracksByPointerId.Add(input.PointerId, track);
             }
         }
@@ -269,7 +271,7 @@ namespace UnityEnhancedGesture {
             for (var i = 0; i < _handlers.Count; i++) {
                 var currentHandler = _handlers[i];
 
-                if (currentHandler == null || !currentHandler.IsActiveAndEnabled || !currentHandler.CanHandle(screenPosition)) {
+                if (currentHandler == null || !currentHandler.IsActiveAndEnabled || !currentHandler.CanHandle(screenPosition, _eventCamera)) {
                     continue;
                 }
 

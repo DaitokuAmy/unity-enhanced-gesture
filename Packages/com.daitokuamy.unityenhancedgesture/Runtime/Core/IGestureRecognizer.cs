@@ -19,8 +19,9 @@ namespace UnityEnhancedGesture {
         /// <param name="pointerId">ポインター ID</param>
         /// <param name="startPosition">開始位置</param>
         /// <param name="startTime">開始時刻</param>
+        /// <param name="eventCamera">イベントに紐づくカメラ</param>
         /// <returns>生成したトラック</returns>
-        IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime);
+        IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime, Camera eventCamera);
 
         /// <summary>
         /// 入力トラックを更新

@@ -19,6 +19,11 @@ namespace UnityEnhancedGesture {
         int PointerId { get; }
 
         /// <summary>
+        /// この入力系列に紐づくイベントカメラ
+        /// </summary>
+        UnityEngine.Camera EventCamera { get; }
+
+        /// <summary>
         /// 処理完了済みかどうか
         /// </summary>
         bool IsCompleted { get; }

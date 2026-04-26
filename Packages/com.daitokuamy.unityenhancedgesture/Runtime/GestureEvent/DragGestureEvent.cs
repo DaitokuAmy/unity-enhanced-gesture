@@ -14,23 +14,26 @@ namespace UnityEnhancedGesture {
         /// <param name="position">現在位置</param>
         /// <param name="delta">前回通知からの差分</param>
         /// <param name="totalDelta">開始位置からの差分</param>
-        /// <param name="positions">開始から現在までの座標列</param>
+        /// <param name="samples">開始から現在までの時系列サンプル列</param>
         /// <param name="duration">開始からの経過時間</param>
+        /// <param name="eventCamera">イベントに紐づくカメラ</param>
         public DragGestureEvent(
             GestureEventPhase phase,
             Vector2 startPosition,
             Vector2 position,
             Vector2 delta,
             Vector2 totalDelta,
-            Vector2[] positions,
-            float duration) {
+            DragGestureSample[] samples,
+            float duration,
+            Camera eventCamera) {
             Phase = phase;
             StartPosition = startPosition;
             Position = position;
             Delta = delta;
             TotalDelta = totalDelta;
-            Positions = positions ?? Array.Empty<Vector2>();
+            Samples = samples ?? Array.Empty<DragGestureSample>();
             Duration = duration;
+            EventCamera = eventCamera;
         }
 
         /// <summary>通知フェーズ</summary>
@@ -43,9 +46,11 @@ namespace UnityEnhancedGesture {
         public Vector2 Delta { get; }
         /// <summary>開始位置からの差分</summary>
         public Vector2 TotalDelta { get; }
-        /// <summary>開始から現在までの座標列</summary>
-        public Vector2[] Positions { get; }
+        /// <summary>開始から現在までの時系列サンプル列</summary>
+        public DragGestureSample[] Samples { get; }
         /// <summary>開始からの経過時間</summary>
         public float Duration { get; }
+        /// <summary>イベントに紐づくカメラ</summary>
+        public Camera EventCamera { get; }
     }
 }

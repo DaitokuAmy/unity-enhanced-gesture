@@ -32,9 +32,9 @@ namespace UnityEnhancedGesture {
         public Vector2 Delta { get; }
 
         /// <summary>
-        /// 開始から現在までの座標列
+        /// 開始から現在までの時系列サンプル列
         /// </summary>
-        public Vector2[] Positions { get; }
+        public DragGestureSample[] Samples { get; }
 
         /// <summary>
         /// 開始時刻
@@ -54,7 +54,7 @@ namespace UnityEnhancedGesture {
         /// <param name="startPosition">開始位置</param>
         /// <param name="position">現在位置</param>
         /// <param name="delta">前回からの差分</param>
-        /// <param name="positions">開始から現在までの座標列</param>
+        /// <param name="samples">開始から現在までの時系列サンプル列</param>
         /// <param name="startTime">開始時刻</param>
         /// <param name="time">現在時刻</param>
         public GesturePointerInput(
@@ -63,7 +63,7 @@ namespace UnityEnhancedGesture {
             Vector2 startPosition,
             Vector2 position,
             Vector2 delta,
-            Vector2[] positions,
+            DragGestureSample[] samples,
             float startTime,
             float time) {
             PointerId = pointerId;
@@ -71,7 +71,7 @@ namespace UnityEnhancedGesture {
             StartPosition = startPosition;
             Position = position;
             Delta = delta;
-            Positions = positions ?? Array.Empty<Vector2>();
+            Samples = samples ?? Array.Empty<DragGestureSample>();
             StartTime = startTime;
             Time = time;
         }

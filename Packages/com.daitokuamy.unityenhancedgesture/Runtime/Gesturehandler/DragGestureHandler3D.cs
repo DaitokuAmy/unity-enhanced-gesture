@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace UnityEnhancedGesture {
     /// <summary>
-    /// RectTransform を対象にドラッグ通知を公開するハンドラー
+    /// Collider を対象にドラッグ通知を公開するハンドラー
     /// </summary>
-    public sealed class DragGestureHandler : GestureHandlerBase, IDragGestureHandler {
-        [SerializeField, Tooltip("ドラッグ対象 RectTransform")]
-        private RectTransform _targetRectTransform = null;
+    public sealed class DragGestureHandler3D : GestureHandlerBase, IDragGestureHandler {
+        [SerializeField, Tooltip("ドラッグ対象 Collider")]
+        private Collider _targetCollider = null;
         [SerializeField, Tooltip("ドラッグ開始とみなす移動量")]
         private float _dragStartThreshold = 12.0f;
 
         /// <summary>
-        /// ドラッグ対象 RectTransform
+        /// ドラッグ対象 Collider
         /// </summary>
-        public RectTransform TargetRectTransform => _targetRectTransform;
+        public Collider TargetCollider => _targetCollider;
 
         /// <inheritdoc/>
         public float DragStartThreshold => _dragStartThreshold;
@@ -40,15 +40,13 @@ namespace UnityEnhancedGesture {
         public event Action<DragGestureEvent> CancelDragEvent;
 
         /// <inheritdoc/>
-        public override bool CanHandle(Vector2 screenPosition) {
-            if (_targetRectTransform == null) {
+        public override bool CanHandle(Vector2 screenPosition, Camera eventCamera) {
+            if (_targetCollider == null || eventCamera == null) {
                 return false;
             }
 
-            return RectTransformUtility.RectangleContainsScreenPoint(
-                _targetRectTransform,
-                screenPosition,
-                GetEventCamera());
+            var ray = eventCamera.ScreenPointToRay(screenPosition);
+            return _targetCollider.Raycast(ray, out _, float.PositiveInfinity);
         }
 
         /// <inheritdoc/>
@@ -69,20 +67,6 @@ namespace UnityEnhancedGesture {
         /// <inheritdoc/>
         public void HandleCancelDrag(DragGestureEvent gestureEvent) {
             CancelDragEvent?.Invoke(gestureEvent);
-        }
-
-        /// <summary>
-        /// 画面座標判定に使用するイベントカメラを取得
-        /// </summary>
-        /// <returns>使用するイベントカメラ</returns>
-        private Camera GetEventCamera() {
-            var canvas = _targetRectTransform.GetComponentInParent<Canvas>();
-
-            if (canvas == null || canvas.renderMode == RenderMode.ScreenSpaceOverlay) {
-                return null;
-            }
-
-            return canvas.worldCamera;
         }
     }
 }

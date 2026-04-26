@@ -8,8 +8,13 @@ namespace UnityEnhancedGesture {
         [SerializeField, Tooltip("候補が重複した際の優先度")]
         private int _priority = 0;
 
-        /// <inheritdoc/>
-        public int Priority => _priority;
+        /// <summary>
+        /// 候補が重複した際の優先度
+        /// </summary>
+        public int Priority {
+            get => _priority;
+            set => _priority = value;
+        }
 
         /// <inheritdoc/>
         public bool IsActiveAndEnabled => isActiveAndEnabled;
@@ -37,6 +42,6 @@ namespace UnityEnhancedGesture {
         }
 
         /// <inheritdoc/>
-        public abstract bool CanHandle(Vector2 screenPosition);
+        public abstract bool CanHandle(Vector2 screenPosition, Camera eventCamera);
     }
 }

@@ -19,7 +19,8 @@ namespace UnityEnhancedGesture {
         /// 指定座標でイベント対象になるかどうかを判定
         /// </summary>
         /// <param name="screenPosition">画面座標</param>
+        /// <param name="eventCamera">座標判定に使用するカメラ</param>
         /// <returns>候補になる場合は true</returns>
-        bool CanHandle(Vector2 screenPosition);
+        bool CanHandle(Vector2 screenPosition, Camera eventCamera);
     }
 }

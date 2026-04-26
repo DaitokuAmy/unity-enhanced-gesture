@@ -50,7 +50,7 @@ namespace UnityEnhancedGesture {
                 touch.startScreenPosition,
                 touch.screenPosition,
                 touch.delta,
-                CreatePositions(touch),
+                CreateSamples(touch),
                 (float)touch.startTime,
                 (float)touch.time);
         }
@@ -72,32 +72,37 @@ namespace UnityEnhancedGesture {
         }
 
         /// <summary>
-        /// 現在タッチの履歴座標列を生成
+        /// 現在タッチの履歴サンプル列を生成
         /// </summary>
         /// <param name="touch">対象タッチ</param>
-        /// <returns>開始から現在までの座標列</returns>
-        private Vector2[] CreatePositions(InputTouch touch) {
-            var positions = new List<Vector2>(touch.history.Count + 1);
+        /// <returns>開始から現在までの時系列サンプル列</returns>
+        private DragGestureSample[] CreateSamples(InputTouch touch) {
+            var samples = new List<DragGestureSample>(touch.history.Count + 1);
 
             for (var i = touch.history.Count - 1; i >= 0; i--) {
-                AppendPositionIfNeeded(positions, touch.history[i].screenPosition);
+                var historyTouch = touch.history[i];
+                AppendSampleIfNeeded(
+                    samples,
+                    historyTouch.screenPosition,
+                    (float)(historyTouch.time - touch.startTime));
             }
 
-            AppendPositionIfNeeded(positions, touch.screenPosition);
-            return positions.ToArray();
+            AppendSampleIfNeeded(samples, touch.screenPosition, (float)(touch.time - touch.startTime));
+            return samples.ToArray();
         }
 
         /// <summary>
-        /// 重複しない場合のみ座標を追加
+        /// 重複しない場合のみサンプルを追加
         /// </summary>
-        /// <param name="positions">追加先</param>
+        /// <param name="samples">追加先</param>
         /// <param name="position">追加候補</param>
-        private void AppendPositionIfNeeded(List<Vector2> positions, Vector2 position) {
-            if (positions.Count > 0 && positions[positions.Count - 1] == position) {
+        /// <param name="elapsedTime">開始からの経過時間</param>
+        private void AppendSampleIfNeeded(List<DragGestureSample> samples, Vector2 position, float elapsedTime) {
+            if (samples.Count > 0 && samples[samples.Count - 1].Position == position) {
                 return;
             }
 
-            positions.Add(position);
+            samples.Add(new DragGestureSample(position, elapsedTime));
         }
     }
 }
