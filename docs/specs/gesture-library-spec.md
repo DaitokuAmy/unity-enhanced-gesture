@@ -35,12 +35,12 @@ _dragGestureHandler.BeginDragEvent += evt =>
 };
 ```
 
-## 開始条件と UI 優先順位
+## 開始条件と UI 利用方針
 
 - ジェスチャーは対象 `RectTransform` の判定エリア内で開始されることを前提とする
 - 開始地点に他の uGUI 要素が存在し、それが `RaycastTarget` として入力を受ける場合は、その要素によって開始をブロッキングする
-- 判定対象となる `RectTransform` 同士が重なっている場合は、uGUI と同様に手前の要素を優先する
-- 手前判定の基準は、ヒエラルキー上でより後ろに配置されている要素を優先する方針とする
+- uGUI は主に `RaycastTarget` を避けるための開始ブロック判定と、効果範囲を `RectTransform` で絞るために利用する
+- Handler 間の優先順位を uGUI のヒエラルキー順や描画順へ追従させることは、現時点では仕様責務に含めない
 
 ## 排他制御の方針
 
@@ -68,9 +68,11 @@ _dragGestureHandler.BeginDragEvent += evt =>
 ### 判定対象管理層
 
 - `RectTransform` と利用者向けコンポーネントの対応を管理する
-- 登録、解除、表示順、重なり順を扱う
+- 登録と解除を扱う
 - 開始地点でどの対象が入力候補になるかを解決する
 - `RaycastTarget` によるブロッキングもここで考慮する
+- 同一 `RectTransform` 上では、同型 Handler 群を 1 つの通知グループとして管理する
+- 同型 Handler 群に設定差異がある場合は有効な共有設定を解決できないため、不正な構成として扱う
 
 ### ジェスチャー調停層
 
@@ -79,12 +81,14 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 各判定器へ入力を渡し、最初に成立したジェスチャーを確定する
 - 成立後は他判定器の成立を停止する
 - キャンセル、終了、指の増減などの状態遷移を一元管理する
+- 個別判定に使う設定値は、対象上の同型 Handler 群で共有されている前提で扱う
 
 ### 利用者向け通知層
 
 - 利用者がアタッチした `MonoBehaviour` を窓口としてイベントを受け取れるようにする
 - 公開 API は内部状態を直接露出せず、イベント引数型を通して必要情報を渡す
 - イベントは `System.Action<TEvent>` で公開する
+- 同一 `RectTransform` 上に同型 Handler が複数存在する場合、同一ジェスチャーの通知は全 Handler へ同報する
 
 ## クラス責務
 
@@ -111,24 +115,29 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - ドラッグ系の公開 API を持つ
 - `System.Action<DragGestureEvent>` 形式のイベントを公開する
 - ドラッグ関連のシリアライズ設定を持つ
+- 同一 `RectTransform` 上で複数利用する場合、設定値は他の `DragGestureHandler` と一致している必要がある
 
 ### `PinchGestureHandler : GestureHandlerBase`
 
 - ピンチ系の公開 API を持つ
 - `System.Action<PinchGestureEvent>` 形式のイベントを公開する
 - ピンチ関連のシリアライズ設定を持つ
+- 同一 `RectTransform` 上で複数利用する場合、設定値は他の `PinchGestureHandler` と一致している必要がある
 
 ### `TapGestureHandler : GestureHandlerBase`
 
 - タップ、ダブルタップ、ロングタップ系の公開 API を持つ
 - `System.Action<TapGestureEvent>` 形式のイベントを公開する
 - タップ関連のシリアライズ設定を持つ
+- 同一 `RectTransform` 上で複数利用する場合、設定値は他の `TapGestureHandler` と一致している必要がある
 
 ### `GestureTargetEntry`
 
 - 1 つの判定対象を表す内部管理単位
-- `RectTransform` と対応ハンドラーの組を持つ
-- 優先順位判定に必要な情報を持つ
+- `RectTransform` と対応ハンドラー群を型別に持つ
+- 同型 Handler 群から共有設定を解決する
+- 同型 Handler 群への通知同報を担当する
+- 判定対象の管理に必要な情報を持つ
 
 ### `GestureSession`
 
@@ -170,12 +179,14 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 利用者が `GestureHandlerBase` 派生コンポーネントを uGUI オブジェクトへ付与する
 - コンポーネント有効化時に対象 `RectTransform` が `GestureCoordinator` へ登録される
 - `GestureCoordinator` は内部の対象一覧を更新する
+- 同一 `RectTransform` 上の同型 Handler は同一通知グループとして登録される
+- 同型 Handler 間で設定が一致しない場合、その型のジェスチャーは有効な共有設定を解決できないため無効構成として扱う
 
 ### 2. ジェスチャー開始候補の解決
 
 - タッチ開始時に開始地点へ対して候補検索を行う
 - 別の `RaycastTarget` が開始地点を占有している場合、その入力系列はライブラリ管理対象にしない
-- ライブラリ管理対象が複数ある場合は、最前面の 1 件だけを候補とする
+- ライブラリ管理対象の重なりに対する厳密な優先順位制御は、現時点では仕様の主目的に含めない
 
 ### 3. 入力系列の所有
 
@@ -194,12 +205,15 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 確定したジェスチャーに応じて対象コンポーネント上のイベントを呼び出す
 - 継続通知、終了通知、キャンセル通知も同じコンポーネントへ返す
 - 利用者は中央管理クラスを意識せず、ハンドラー経由でイベントを扱う
+- 同一 `RectTransform` 上に同型 Handler が複数ある場合、同一イベントはその全 Handler へ返す
 
 ## 設定方針
 
 - 判定しきい値や時間設定は、`ScriptableObject` 集約ではなく各ハンドラーの `MonoBehaviour` 側にシリアライズ値として持たせる
 - 利用者はインスペクタから各ハンドラーの挙動を直接調整できる
 - 初期段階ではローカル設定を優先し、共有設定の仕組みは必要になった段階で追加検討する
+- 同一 `RectTransform` 上で同型 Handler を複数使う場合、それらのシリアライズ設定は同一値でそろえる
+- 同型 Handler 間で設定差異がある場合、登録順や代表選出で吸収せず不正構成として扱う
 
 想定する設定項目は以下とする。
 
@@ -238,6 +252,7 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 公開 API の命名は `Target` より `Handler` を優先する
 - 中央管理クラス名は `GestureCoordinator` とする
 - まずは全パターンを広げず、責務分割を先に固める
+- uGUI は開始ブロック判定と効果範囲制限のために利用し、Handler 間優先順位の再現までは担わない
 
 ## 未確定事項
 
@@ -248,3 +263,44 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - `GestureSession` を 1 指中心で持つか、最初から複数指抽象化で持つか
 - ロングタップ後ドラッグのようなジェスチャー遷移をどう扱うか
 - 公開イベント命名を `BeginDragEvent` 系で揃えるか、別命名へ寄せるか
+
+## 再設計メモ
+
+- まずは入力取得と内部利用向けデータ変換を最優先で実装する
+- `EnhancedTouch` の解釈と正規化は `GestureCoordinator` の責務として扱う
+- 判定対象そのものは `RectTransform` 基準とし、`RaycastTarget` は開始ブロック判定にのみ使う
+- 判定対象自身が `RaycastTarget` であることを必須条件にしない
+- Unity Editor 上でマウス操作による検証ができることを前提にする
+- Editor では `TouchSimulation` を用いた検証経路を用意する
+- 最初は `Drag` だけを通す最小構成で作り、そこから段階的に `Tap` や `Pinch` を追加する
+- 初期段階ではクラス数を増やしすぎず、`GestureCoordinator` に寄せた薄い実装から始める
+- 先回りした抽象化や拡張前提の分割は避け、動作確認後に必要な分だけ整理する
+- `GestureCoordinator` は `RectTransform` そのものを知る必然は薄く、必要なのは入力座標と各 Handler への問い合わせ経路である
+- 座標をどう判定するか、`RectTransform` を使うかどうかは Handler 側の都合として扱う
+- 開始時には候補 Handler 群を集め、その中から最終的な配送先 Handler を 1 つだけ選ぶ
+- 複数 Handler が候補になる場合は、`Priority` の数値が最も高い Handler を優先する
+- `Priority` が同値の場合は登録順で決定する
+- 開始時にイベント送信対象となった Handler は `GestureCoordinator` が入力系列単位で保持する
+- `Drag` の開始イベントを受けていない Handler に、`Drag` 中イベントや終了イベントを送らない
+- 開始イベントを送った Handler には、終了またはキャンセルまで後続イベントを確実に送る
+- 後続イベントの配送先管理は `GestureCoordinator` の責務とする
+- 解析機はイベントデータ生成に寄せ、どの Handler へ配送するかの判断は `GestureCoordinator` 側で扱う
+- `GestureCoordinator` は生の `EnhancedTouch` や `Mouse` を直接解釈せず、入力解析インターフェースへ処理を委譲する
+- 入力解析実装は、実機向け `EnhancedTouch` 系と Editor 向け入力系で差し替え可能にする
+- 入力解析結果は共通の内部入力データへ正規化し、その後の `Recognizer` と `Handler` 判定は共通処理に寄せる
+- Handler 探索や保持は concrete class ではなく、Handler 用インターフェース型を通して行う
+- `GestureCoordinator` は自動生成せず、シーンへ明示的に配置された場合のみ動作する形を優先する
+- `GestureCoordinator` は `Instance` アクセス時に自動生成するシングルトン設計を採用しない
+- `static` アクセスは許容してよいが、インスタンスの生存は `MonoBehaviour` として配置された実体に依存させる
+- `EnhancedTouchSupport` や `TouchSimulation` の有効化責務は固定せず、`GestureCoordinator` の設定で自動管理するか外部管理するかを選べるようにする
+- 既定値は `GestureCoordinator` による自動 On/Off 管理とし、必要な場合のみ外部管理へ切り替えられるようにする
+- 入力更新の駆動方式は既定で Unity の `Update` を使い、必要な場合は `ManualUpdate` へ切り替えられるようにする
+- `ManualUpdate` は 1 フレームにつき 1 回だけ呼ぶ前提とし、同一フレームでの重複呼び出しは例外として扱ってよい
+- 外部管理モードで入力系が未初期化のまま `GestureCoordinator` が動作した場合は警告を出す
+- Handler は `GestureCoordinator` へ自動登録する形を基本とし、基底クラス側で登録処理を担う
+- `CanHandle` に渡す情報は `ScreenPosition` を基本とし、`Camera` や `Ray`、入力 phase などは必須前提にしない
+- `Pinch` の Editor シミュレーションは `Alt +` マウスドラッグを基本とする
+- `Pinch` シミュレーションでは、ドラッグ開始位置を中央点、現在位置を指 1、開始位置に対する点対称位置を指 2 として扱う
+- 解析機は型ごとにユニークインスタンス管理し、必要に応じてジェスチャー種別専用の入力解析を行えるようにする
+- `Recognizer` は `GestureCoordinator` 側の固定資産として保持し、Handler ごとに生成しない
+- `Recognizer` の解決は `GestureCoordinator` が行い、`Type` ベースの反射生成は使わない

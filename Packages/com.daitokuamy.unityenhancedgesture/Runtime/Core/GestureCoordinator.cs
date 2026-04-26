@@ -1,367 +1,343 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
-using InputTouch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using InputTouchPhase = UnityEngine.InputSystem.TouchPhase;
+using UnityEngine.InputSystem;
 
 namespace UnityEnhancedGesture {
     /// <summary>
-    /// ジェスチャー検出と排他制御を統括する中央管理クラス
+    /// 入力の収集とジェスチャー配送を統括する中央管理クラス
     /// </summary>
     [DefaultExecutionOrder(-1000)]
     public sealed class GestureCoordinator : MonoBehaviour {
+        private static readonly List<IGestureRecognizer> Recognizers = new() {
+            new DragGestureRecognizer(),
+        };
+
         private static GestureCoordinator s_instance;
 
-        private readonly Dictionary<RectTransform, GestureTargetEntry> _entriesByRectTransform = new();
-        private readonly Dictionary<int, GestureSession> _sessionsByTouchId = new();
-        private readonly Dictionary<int, InputTouch> _touchesById = new();
-        private readonly List<GestureSession> _sessionBuffer = new();
-        private readonly DragGestureRecognizer _dragGestureRecognizer = new();
-        private readonly PinchGestureRecognizer _pinchGestureRecognizer = new();
-        private readonly TapGestureRecognizer _tapGestureRecognizer = new();
-        private readonly LongPressGestureRecognizer _longPressGestureRecognizer = new();
+        [SerializeField, Tooltip("入力システムの有効化管理方式")]
+        private GestureInputManagementMode _inputManagementMode = GestureInputManagementMode.Automatic;
+        [SerializeField, Tooltip("入力更新の駆動方式")]
+        private GestureCoordinatorUpdateMode _updateMode = GestureCoordinatorUpdateMode.Update;
 
-        /// <summary>現在の中央管理インスタンス</summary>
-        public static GestureCoordinator Instance {
-            get {
-                if (s_instance == null) {
-                    CreateInstance();
-                }
+        private readonly List<IGestureHandler> _handlers = new();
+        private readonly Dictionary<int, GesturePointerInput> _inputsByPointerId = new();
+        private readonly Dictionary<int, IGestureTrack> _tracksByPointerId = new();
+        private readonly List<GesturePointerInput> _inputBuffer = new();
+        private readonly List<IGestureTrack> _trackBuffer = new();
 
-                return s_instance;
-            }
-        }
-
-        /// <summary>インスタンスが生成済みかどうか</summary>
-        internal static bool HasInstance => s_instance != null;
+        private PointerMouseGestureInputProvider _mouseInputProvider;
+        private EnhancedTouchGestureInputProvider _enhancedTouchInputProvider;
+        private IGestureInputProvider _inputProvider;
+        private bool _hasWarnedInputProviderState;
+        private int _lastManualUpdateFrame = -1;
 
         /// <summary>
-        /// シーン読み込み前に管理インスタンスを準備
+        /// 現在の管理インスタンス
         /// </summary>
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Initialize() {
-            if (s_instance == null) {
-                CreateInstance();
-            }
-        }
-
-        /// <summary>
-        /// ハンドラーを中央管理へ登録
-        /// </summary>
-        /// <param name="handler">登録対象ハンドラー</param>
-        public void RegisterHandler(GestureHandlerBase handler) {
-            if (handler == null) {
-                return;
-            }
-
-            RectTransform rectTransform = handler.TargetRectTransform;
-
-            if (!_entriesByRectTransform.TryGetValue(rectTransform, out GestureTargetEntry targetEntry)) {
-                targetEntry = new GestureTargetEntry(rectTransform);
-                _entriesByRectTransform.Add(rectTransform, targetEntry);
-            }
-
-            targetEntry.AddHandler(handler);
-        }
-
-        /// <summary>
-        /// ハンドラーを中央管理から解除
-        /// </summary>
-        /// <param name="handler">解除対象ハンドラー</param>
-        public void UnregisterHandler(GestureHandlerBase handler) {
-            if (handler == null) {
-                return;
-            }
-
-            RectTransform rectTransform = handler.TargetRectTransform;
-
-            if (!_entriesByRectTransform.TryGetValue(rectTransform, out GestureTargetEntry targetEntry)) {
-                return;
-            }
-
-            targetEntry.RemoveHandler(handler);
-
-            if (targetEntry.IsEmpty) {
-                _entriesByRectTransform.Remove(rectTransform);
-            }
-        }
-
-        /// <summary>
-        /// 管理インスタンスを生成
-        /// </summary>
-        private static void CreateInstance() {
-            GameObject coordinatorObject = new("[Unity Enhanced Gesture Coordinator]") {
-                hideFlags = HideFlags.HideInHierarchy,
-            };
-
-            DontDestroyOnLoad(coordinatorObject);
-            s_instance = coordinatorObject.AddComponent<GestureCoordinator>();
-        }
+        public static GestureCoordinator Instance => s_instance;
 
         /// <summary>
         /// インスタンスを初期化
         /// </summary>
         private void Awake() {
             if (s_instance != null && s_instance != this) {
-                Destroy(gameObject);
+                Debug.LogError("Multiple GestureCoordinator components are not supported.", this);
+                enabled = false;
                 return;
             }
 
             s_instance = this;
-            EnhancedTouchSupport.Enable();
+            _mouseInputProvider = new PointerMouseGestureInputProvider();
+            _enhancedTouchInputProvider = new EnhancedTouchGestureInputProvider();
+            _inputProvider = ResolveInputProvider();
         }
 
         /// <summary>
-        /// インスタンス破棄時に入力監視を終了
+        /// 有効化時に入力管理を初期化
         /// </summary>
-        private void OnDestroy() {
-            if (s_instance != this) {
+        private void OnEnable() {
+            if (!Application.isPlaying || s_instance != this) {
                 return;
             }
 
-            EnhancedTouchSupport.Disable();
-            s_instance = null;
+            _enhancedTouchInputProvider.Enable(_inputManagementMode);
+            _mouseInputProvider.Enable(_inputManagementMode);
+            _inputProvider = ResolveInputProvider();
+            RefreshRegisteredHandlers();
         }
 
         /// <summary>
-        /// 毎フレームの入力更新を処理
+        /// 無効化時に入力管理を解放
+        /// </summary>
+        private void OnDisable() {
+            if (!Application.isPlaying || s_instance != this || _inputProvider == null) {
+                return;
+            }
+
+            _mouseInputProvider.Disable(_inputManagementMode);
+            _enhancedTouchInputProvider.Disable(_inputManagementMode);
+        }
+
+        /// <summary>
+        /// 破棄時にインスタンス参照を解放
+        /// </summary>
+        private void OnDestroy() {
+            if (s_instance == this) {
+                s_instance = null;
+            }
+        }
+
+        /// <summary>
+        /// 毎フレーム入力を更新
         /// </summary>
         private void Update() {
-            _tapGestureRecognizer.FlushPending(Time.realtimeSinceStartup);
-            CacheTouches();
-            HandleTouchBegins();
-            CollectSessions();
+            if (_updateMode != GestureCoordinatorUpdateMode.Update) {
+                return;
+            }
 
-            for (int i = 0; i < _sessionBuffer.Count; i++) {
-                GestureSession session = _sessionBuffer[i];
+            ProcessInput();
+        }
 
-                if (!TryCreateSnapshot(session, out GestureInputSnapshot inputSnapshot)) {
-                    RemoveSession(session);
-                    continue;
-                }
+        /// <summary>
+        /// ハンドラーを登録
+        /// </summary>
+        /// <param name="handler">登録対象ハンドラー</param>
+        public void RegisterHandler(IGestureHandler handler) {
+            if (handler == null || _handlers.Contains(handler)) {
+                return;
+            }
 
-                ProcessSession(session, inputSnapshot);
+            _handlers.Add(handler);
+        }
+
+        /// <summary>
+        /// ハンドラー登録を解除
+        /// </summary>
+        /// <param name="handler">解除対象ハンドラー</param>
+        public void UnregisterHandler(IGestureHandler handler) {
+            _handlers.Remove(handler);
+        }
+
+        /// <summary>
+        /// 手動更新を実行
+        /// </summary>
+        public void ManualUpdate() {
+            if (_updateMode != GestureCoordinatorUpdateMode.ManualUpdate) {
+                return;
+            }
+
+            if (_lastManualUpdateFrame == Time.frameCount) {
+                throw new InvalidOperationException("GestureCoordinator.ManualUpdate must not be called more than once per frame.");
+            }
+
+            _lastManualUpdateFrame = Time.frameCount;
+            ProcessInput();
+        }
+
+        /// <summary>
+        /// 現在有効な入力解析実装を解決
+        /// </summary>
+        /// <returns>入力解析実装</returns>
+        private IGestureInputProvider ResolveInputProvider() {
+            if (_enhancedTouchInputProvider != null && Touchscreen.current != null && _enhancedTouchInputProvider.IsReady(_inputManagementMode)) {
+                return _enhancedTouchInputProvider;
+            }
+
+            if (_mouseInputProvider != null && _mouseInputProvider.IsReady(_inputManagementMode)) {
+                return _mouseInputProvider;
+            }
+
+            return _enhancedTouchInputProvider;
+        }
+
+        /// <summary>
+        /// シーン上の有効ハンドラー登録を同期
+        /// </summary>
+        private void RefreshRegisteredHandlers() {
+            _handlers.Clear();
+
+            foreach (var handler in FindObjectsByType<GestureHandlerBase>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) {
+                RegisterHandler(handler);
             }
         }
 
         /// <summary>
-        /// 現在のタッチ一覧をキャッシュ
+        /// 入力処理本体
         /// </summary>
-        private void CacheTouches() {
-            _touchesById.Clear();
+        private void ProcessInput() {
+            RefreshActiveInputProvider();
 
-            foreach (InputTouch touch in InputTouch.activeTouches) {
-                _touchesById[touch.touchId] = touch;
+            if (!CanProcessInput()) {
+                return;
+            }
+
+            CacheInputs();
+            HandleInputBegins();
+            CollectTracks();
+
+            for (var i = 0; i < _trackBuffer.Count; i++) {
+                var track = _trackBuffer[i];
+
+                if (!_inputsByPointerId.TryGetValue(track.PointerId, out var input)) {
+                    _tracksByPointerId.Remove(track.PointerId);
+                    continue;
+                }
+
+                ProcessTrack(track, input);
             }
         }
 
         /// <summary>
-        /// 開始したタッチからセッションを生成または拡張
+        /// 入力処理可能かどうかを判定
         /// </summary>
-        private void HandleTouchBegins() {
-            foreach (InputTouch touch in _touchesById.Values) {
-                if (touch.phase != InputTouchPhase.Began) {
-                    continue;
-                }
-
-                if (_sessionsByTouchId.ContainsKey(touch.touchId)) {
-                    continue;
-                }
-
-                if (!GestureRaycastResolver.TryResolveTarget(_entriesByRectTransform, touch.screenPosition, out GestureTargetEntry targetEntry)) {
-                    continue;
-                }
-
-                if (TryMergeTouchIntoPinchSession(targetEntry, touch)) {
-                    continue;
-                }
-
-                GestureSession session = new(targetEntry, touch.touchId, touch.startScreenPosition, (float)touch.startTime);
-                _sessionsByTouchId.Add(touch.touchId, session);
-            }
-        }
-
-        /// <summary>
-        /// 既存セッションへ副タッチを結合
-        /// </summary>
-        /// <param name="targetEntry">対象エントリ</param>
-        /// <param name="touch">追加するタッチ</param>
-        /// <returns>結合に成功した場合は true</returns>
-        private bool TryMergeTouchIntoPinchSession(GestureTargetEntry targetEntry, InputTouch touch) {
-            if (!targetEntry.TryGetHandler<PinchGestureHandler>(out _)) {
+        /// <returns>処理可能な場合は true</returns>
+        private bool CanProcessInput() {
+            if (_inputProvider == null) {
                 return false;
             }
 
-            GestureSession candidateSession = null;
-
-            foreach (GestureSession session in _sessionsByTouchId.Values) {
-                if (session.TargetEntry != targetEntry || !session.CanMergeSecondTouch) {
-                    continue;
-                }
-
-                if (!_touchesById.TryGetValue(session.PrimaryTouchId, out InputTouch primaryTouch)) {
-                    continue;
-                }
-
-                session.AttachSecondaryTouch(touch.touchId, primaryTouch.screenPosition, touch.screenPosition);
-                candidateSession = session;
-                break;
-            }
-
-            if (candidateSession == null) {
-                return false;
-            }
-
-            _sessionsByTouchId.Add(touch.touchId, candidateSession);
-            return true;
-        }
-
-        /// <summary>
-        /// 重複なしのセッション一覧を構築
-        /// </summary>
-        private void CollectSessions() {
-            _sessionBuffer.Clear();
-
-            foreach (GestureSession session in _sessionsByTouchId.Values) {
-                if (!_sessionBuffer.Contains(session)) {
-                    _sessionBuffer.Add(session);
-                }
-            }
-        }
-
-        /// <summary>
-        /// セッション用の入力スナップショットを生成
-        /// </summary>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">生成結果</param>
-        /// <returns>生成に成功した場合は true</returns>
-        private bool TryCreateSnapshot(GestureSession session, out GestureInputSnapshot inputSnapshot) {
-            inputSnapshot = default;
-
-            if (!_touchesById.TryGetValue(session.PrimaryTouchId, out InputTouch primaryTouch)) {
-                return false;
-            }
-
-            if (!session.HasSecondaryTouch) {
-                inputSnapshot = new GestureInputSnapshot(primaryTouch, null);
+            if (_inputProvider.IsReady(_inputManagementMode)) {
+                _hasWarnedInputProviderState = false;
                 return true;
             }
 
-            if (!session.SecondaryTouchId.HasValue || !_touchesById.TryGetValue(session.SecondaryTouchId.Value, out InputTouch secondaryTouch)) {
-                return false;
+            if (!_hasWarnedInputProviderState) {
+                Debug.LogWarning(_inputProvider.NotReadyMessage, this);
+                _hasWarnedInputProviderState = true;
             }
 
-            inputSnapshot = new GestureInputSnapshot(primaryTouch, secondaryTouch);
-            return true;
+            return false;
         }
 
         /// <summary>
-        /// セッション状態に応じて認識器を評価
+        /// 現在フレームの入力一覧をキャッシュ
         /// </summary>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">入力スナップショット</param>
-        private void ProcessSession(GestureSession session, GestureInputSnapshot inputSnapshot) {
-            if (session.RecognizedType == GestureRecognitionType.Drag) {
-                ProcessRecognizedDrag(session, inputSnapshot);
-                return;
-            }
+        private void CacheInputs() {
+            _inputBuffer.Clear();
+            _inputsByPointerId.Clear();
 
-            if (session.RecognizedType == GestureRecognitionType.Pinch) {
-                ProcessRecognizedPinch(session, inputSnapshot);
-                return;
-            }
+            _inputProvider.CollectInputs(_inputBuffer);
 
-            if (session.RecognizedType == GestureRecognitionType.LongPress) {
-                ProcessRecognizedLongPress(session, inputSnapshot);
-                return;
+            for (var i = 0; i < _inputBuffer.Count; i++) {
+                var input = _inputBuffer[i];
+                _inputsByPointerId[input.PointerId] = input;
             }
+        }
 
-            if (inputSnapshot.TouchCount == 2
-                && session.TargetEntry.TryGetHandler<PinchGestureHandler>(out PinchGestureHandler pinchHandler)
-                && _pinchGestureRecognizer.TryBegin(pinchHandler, session, inputSnapshot)) {
-                return;
-            }
-
-            if (inputSnapshot.TouchCount == 1
-                && session.TargetEntry.TryGetHandler<DragGestureHandler>(out DragGestureHandler dragHandler)
-                && _dragGestureRecognizer.TryBegin(dragHandler, session, inputSnapshot)) {
-                return;
-            }
-
-            if (inputSnapshot.TouchCount == 1
-                && session.TargetEntry.TryGetHandler<TapGestureHandler>(out TapGestureHandler tapHandler)
-                && _longPressGestureRecognizer.TryBegin(tapHandler, session, inputSnapshot)) {
-                return;
-            }
-
-            if (inputSnapshot.HasAnyCanceledTouch) {
-                if (inputSnapshot.TouchCount == 1 && session.TargetEntry.TryGetHandler<TapGestureHandler>(out TapGestureHandler canceledTapHandler)) {
-                    _tapGestureRecognizer.RaiseCanceled(canceledTapHandler, inputSnapshot);
+        /// <summary>
+        /// 新規入力開始から候補ハンドラーを選択
+        /// </summary>
+        private void HandleInputBegins() {
+            foreach (var input in _inputsByPointerId.Values) {
+                if (input.Phase != GestureInputPhase.Began || _tracksByPointerId.ContainsKey(input.PointerId)) {
+                    continue;
                 }
 
-                RemoveSession(session);
-                return;
-            }
-
-            if (inputSnapshot.TouchCount == 1 && inputSnapshot.IsPrimaryEnded) {
-                if (session.TargetEntry.TryGetHandler<TapGestureHandler>(out TapGestureHandler completedTapHandler)
-                    && !_tapGestureRecognizer.TryCompleteTap(completedTapHandler, inputSnapshot)) {
-                    _tapGestureRecognizer.RaiseCanceled(completedTapHandler, inputSnapshot);
+                if (!TrySelectHandler(input.Position, out var handler, out var recognizer)) {
+                    continue;
                 }
 
-                RemoveSession(session);
+                var track = recognizer.CreateTrack(handler, input.PointerId, input.StartPosition, input.StartTime);
+                _tracksByPointerId.Add(input.PointerId, track);
+            }
+        }
+
+        /// <summary>
+        /// 進行中トラック一覧を構築
+        /// </summary>
+        private void CollectTracks() {
+            _trackBuffer.Clear();
+
+            foreach (var track in _tracksByPointerId.Values) {
+                _trackBuffer.Add(track);
+            }
+        }
+
+        /// <summary>
+        /// 優先度に基づいて配送先ハンドラーを選択
+        /// </summary>
+        /// <param name="screenPosition">開始位置</param>
+        /// <param name="handler">選択されたハンドラー</param>
+        /// <param name="recognizer">選択された認識器</param>
+        /// <returns>選択できた場合は true</returns>
+        private bool TrySelectHandler(Vector2 screenPosition, out IGestureHandler handler, out IGestureRecognizer recognizer) {
+            handler = null;
+            recognizer = null;
+            var selectedPriority = int.MinValue;
+
+            for (var i = 0; i < _handlers.Count; i++) {
+                var currentHandler = _handlers[i];
+
+                if (currentHandler == null || !currentHandler.IsActiveAndEnabled || !currentHandler.CanHandle(screenPosition)) {
+                    continue;
+                }
+
+                if (!TryGetRecognizer(currentHandler, out var currentRecognizer)) {
+                    continue;
+                }
+
+                if (handler == null || currentHandler.Priority > selectedPriority) {
+                    handler = currentHandler;
+                    recognizer = currentRecognizer;
+                    selectedPriority = currentHandler.Priority;
+                }
+            }
+
+            return handler != null;
+        }
+
+        /// <summary>
+        /// トラックを更新
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="input">現在入力</param>
+        private void ProcessTrack(IGestureTrack track, GesturePointerInput input) {
+            if (track == null || track.Recognizer == null) {
+                _tracksByPointerId.Remove(track.PointerId);
                 return;
             }
 
-            if (inputSnapshot.TouchCount == 2 && inputSnapshot.HasAnyEndedTouch) {
-                RemoveSession(session);
+            track.Recognizer.ProcessTrack(track, input);
+
+            if (track.IsCompleted) {
+                _tracksByPointerId.Remove(track.PointerId);
             }
         }
 
         /// <summary>
-        /// 成立済みドラッグを更新
+        /// 指定ハンドラーに対応する認識器を取得
         /// </summary>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">入力スナップショット</param>
-        private void ProcessRecognizedDrag(GestureSession session, GestureInputSnapshot inputSnapshot) {
-            if (!session.TargetEntry.TryGetHandler<DragGestureHandler>(out DragGestureHandler dragHandler)
-                || _dragGestureRecognizer.Update(dragHandler, session, inputSnapshot)) {
-                RemoveSession(session);
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="recognizer">取得結果</param>
+        /// <returns>取得できた場合は true</returns>
+        private bool TryGetRecognizer(IGestureHandler handler, out IGestureRecognizer recognizer) {
+            for (var i = 0; i < Recognizers.Count; i++) {
+                var currentRecognizer = Recognizers[i];
+
+                if (!currentRecognizer.CanCreateTrack(handler)) {
+                    continue;
+                }
+
+                recognizer = currentRecognizer;
+                return true;
             }
+
+            recognizer = null;
+            return false;
         }
 
         /// <summary>
-        /// 成立済みピンチを更新
+        /// 現在のデバイス状態に応じて入力解析実装を更新
         /// </summary>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">入力スナップショット</param>
-        private void ProcessRecognizedPinch(GestureSession session, GestureInputSnapshot inputSnapshot) {
-            if (!session.TargetEntry.TryGetHandler<PinchGestureHandler>(out PinchGestureHandler pinchHandler)
-                || _pinchGestureRecognizer.Update(pinchHandler, session, inputSnapshot)) {
-                RemoveSession(session);
-            }
-        }
+        private void RefreshActiveInputProvider() {
+            var resolvedInputProvider = ResolveInputProvider();
 
-        /// <summary>
-        /// 成立済みロングプレスを更新
-        /// </summary>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">入力スナップショット</param>
-        private void ProcessRecognizedLongPress(GestureSession session, GestureInputSnapshot inputSnapshot) {
-            if (!session.TargetEntry.TryGetHandler<TapGestureHandler>(out TapGestureHandler tapHandler)
-                || _longPressGestureRecognizer.Update(tapHandler, session, inputSnapshot)) {
-                RemoveSession(session);
+            if (ReferenceEquals(_inputProvider, resolvedInputProvider)) {
+                return;
             }
-        }
 
-        /// <summary>
-        /// セッションを破棄
-        /// </summary>
-        /// <param name="session">破棄対象セッション</param>
-        private void RemoveSession(GestureSession session) {
-            foreach (int touchId in session.EnumerateTouchIds()) {
-                _sessionsByTouchId.Remove(touchId);
-            }
+            _inputProvider = resolvedInputProvider;
         }
     }
 }

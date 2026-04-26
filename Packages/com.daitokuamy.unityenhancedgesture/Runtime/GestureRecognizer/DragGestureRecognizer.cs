@@ -1,79 +1,124 @@
 using UnityEngine;
-using InputTouch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using InputTouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace UnityEnhancedGesture {
     /// <summary>
-    /// ドラッグ成立を判定する内部認識器
+    /// ドラッグ入力を解析する認識器
     /// </summary>
-    internal sealed class DragGestureRecognizer : GestureRecognizerBase {
-        /// <inheritdoc/>
-        public override GestureRecognitionType RecognitionType => GestureRecognitionType.Drag;
-
+    internal sealed class DragGestureRecognizer : IGestureRecognizer {
         /// <summary>
-        /// ドラッグ開始を判定
+        /// 進行中ドラッグの内部状態
         /// </summary>
-        /// <param name="handler">対象ハンドラー</param>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">入力スナップショット</param>
-        /// <returns>開始した場合は true</returns>
-        public bool TryBegin(DragGestureHandler handler, GestureSession session, GestureInputSnapshot inputSnapshot) {
-            if (inputSnapshot.TouchCount != 1 || inputSnapshot.PrimaryTravelDistance < handler.DragStartThreshold) {
-                return false;
+        private sealed class DragGestureTrack : IGestureTrack {
+            /// <inheritdoc/>
+            public IGestureHandler Handler { get; }
+
+            /// <inheritdoc/>
+            public IGestureRecognizer Recognizer { get; }
+
+            /// <inheritdoc/>
+            public int PointerId { get; }
+
+            /// <inheritdoc/>
+            public bool IsCompleted { get; set; }
+
+            /// <summary>
+            /// ドラッグ開始位置
+            /// </summary>
+            public Vector2 StartPosition { get; }
+
+            /// <summary>
+            /// ドラッグ開始時刻
+            /// </summary>
+            public float StartTime { get; }
+
+            /// <summary>
+            /// 開始通知送信済みかどうか
+            /// </summary>
+            public bool HasBegun { get; set; }
+
+            /// <summary>
+            /// トラックを初期化
+            /// </summary>
+            /// <param name="recognizer">処理担当認識器</param>
+            /// <param name="handler">配送対象ハンドラー</param>
+            /// <param name="pointerId">ポインター ID</param>
+            /// <param name="startPosition">開始位置</param>
+            /// <param name="startTime">開始時刻</param>
+            public DragGestureTrack(IGestureRecognizer recognizer, IDragGestureHandler handler, int pointerId, Vector2 startPosition, float startTime) {
+                Recognizer = recognizer;
+                Handler = handler;
+                PointerId = pointerId;
+                StartPosition = startPosition;
+                StartTime = startTime;
             }
-
-            session.RecognizedType = RecognitionType;
-            session.UpdatePositions(inputSnapshot);
-            handler.RaiseBeginDrag(CreateEvent(inputSnapshot.PrimaryTouch, GestureEventPhase.Began));
-
-            if (inputSnapshot.PrimaryTouch.phase == InputTouchPhase.Moved && inputSnapshot.PrimaryTouch.delta != Vector2.zero) {
-                handler.RaiseDrag(CreateEvent(inputSnapshot.PrimaryTouch, GestureEventPhase.Updated));
-            }
-
-            return true;
         }
 
-        /// <summary>
-        /// 成立済みドラッグを更新
-        /// </summary>
-        /// <param name="handler">対象ハンドラー</param>
-        /// <param name="session">対象セッション</param>
-        /// <param name="inputSnapshot">入力スナップショット</param>
-        /// <returns>終了またはキャンセルしてセッション破棄が必要な場合は true</returns>
-        public bool Update(DragGestureHandler handler, GestureSession session, GestureInputSnapshot inputSnapshot) {
-            session.UpdatePositions(inputSnapshot);
+        /// <inheritdoc/>
+        public bool CanCreateTrack(IGestureHandler handler) {
+            return handler is IDragGestureHandler;
+        }
 
-            if (inputSnapshot.IsPrimaryCanceled) {
-                handler.RaiseCancelDrag(CreateEvent(inputSnapshot.PrimaryTouch, GestureEventPhase.Canceled));
-                return true;
+        /// <inheritdoc/>
+        public IGestureTrack CreateTrack(IGestureHandler handler, int pointerId, Vector2 startPosition, float startTime) {
+            return new DragGestureTrack(this, (IDragGestureHandler)handler, pointerId, startPosition, startTime);
+        }
+
+        /// <inheritdoc/>
+        public void ProcessTrack(IGestureTrack track, GesturePointerInput input) {
+            var dragTrack = (DragGestureTrack)track;
+            var dragHandler = (IDragGestureHandler)dragTrack.Handler;
+            var sentDragEvent = false;
+            var totalDistance = Vector2.Distance(dragTrack.StartPosition, input.Position);
+
+            if (!dragTrack.HasBegun && totalDistance >= dragHandler.DragStartThreshold) {
+                dragTrack.HasBegun = true;
+                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began));
+
+                if (input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
+                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated));
+                    sentDragEvent = true;
+                }
             }
 
-            if (inputSnapshot.IsPrimaryEnded) {
-                handler.RaiseEndDrag(CreateEvent(inputSnapshot.PrimaryTouch, GestureEventPhase.Completed));
-                return true;
+            if (input.Phase == GestureInputPhase.Canceled) {
+                if (dragTrack.HasBegun) {
+                    dragHandler.HandleCancelDrag(CreateEvent(dragTrack, input, GestureEventPhase.Canceled));
+                }
+
+                dragTrack.IsCompleted = true;
+                return;
             }
 
-            if (inputSnapshot.PrimaryTouch.phase == InputTouchPhase.Moved && inputSnapshot.PrimaryTouch.delta != Vector2.zero) {
-                handler.RaiseDrag(CreateEvent(inputSnapshot.PrimaryTouch, GestureEventPhase.Updated));
+            if (input.Phase == GestureInputPhase.Ended) {
+                if (dragTrack.HasBegun) {
+                    dragHandler.HandleEndDrag(CreateEvent(dragTrack, input, GestureEventPhase.Completed));
+                }
+
+                dragTrack.IsCompleted = true;
+                return;
             }
 
-            return false;
+            if (dragTrack.HasBegun && !sentDragEvent && input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
+                dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated));
+            }
         }
 
         /// <summary>
         /// ドラッグ通知用イベント引数を生成
         /// </summary>
-        /// <param name="touch">対象タッチ</param>
+        /// <param name="track">対象トラック</param>
+        /// <param name="input">現在入力</param>
         /// <param name="phase">通知フェーズ</param>
         /// <returns>イベント引数</returns>
-        private static DragGestureEvent CreateEvent(InputTouch touch, GestureEventPhase phase) {
+        private DragGestureEvent CreateEvent(DragGestureTrack track, GesturePointerInput input, GestureEventPhase phase) {
             return new DragGestureEvent(
                 phase,
-                touch.startScreenPosition,
-                touch.screenPosition,
-                touch.delta,
-                touch.screenPosition - touch.startScreenPosition,
-                (float)(touch.time - touch.startTime));
+                track.StartPosition,
+                input.Position,
+                input.Delta,
+                input.Position - track.StartPosition,
+                input.Positions,
+                input.Time - track.StartTime);
         }
     }
 }

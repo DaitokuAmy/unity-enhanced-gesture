@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
@@ -13,6 +14,7 @@ namespace UnityEnhancedGesture {
         /// <param name="position">現在位置</param>
         /// <param name="delta">前回通知からの差分</param>
         /// <param name="totalDelta">開始位置からの差分</param>
+        /// <param name="positions">開始から現在までの座標列</param>
         /// <param name="duration">開始からの経過時間</param>
         public DragGestureEvent(
             GestureEventPhase phase,
@@ -20,12 +22,14 @@ namespace UnityEnhancedGesture {
             Vector2 position,
             Vector2 delta,
             Vector2 totalDelta,
+            Vector2[] positions,
             float duration) {
             Phase = phase;
             StartPosition = startPosition;
             Position = position;
             Delta = delta;
             TotalDelta = totalDelta;
+            Positions = positions ?? Array.Empty<Vector2>();
             Duration = duration;
         }
 
@@ -39,6 +43,8 @@ namespace UnityEnhancedGesture {
         public Vector2 Delta { get; }
         /// <summary>開始位置からの差分</summary>
         public Vector2 TotalDelta { get; }
+        /// <summary>開始から現在までの座標列</summary>
+        public Vector2[] Positions { get; }
         /// <summary>開始からの経過時間</summary>
         public float Duration { get; }
     }

@@ -4,41 +4,21 @@ namespace UnityEnhancedGesture {
     /// <summary>
     /// ジェスチャーハンドラーの共通基底クラス
     /// </summary>
-    [RequireComponent(typeof(RectTransform))]
-    public abstract class GestureHandlerBase : MonoBehaviour {
-        [SerializeField]
-        private RectTransform _targetRectTransform;
+    public abstract class GestureHandlerBase : MonoBehaviour, IGestureHandler {
+        [SerializeField, Tooltip("候補が重複した際の優先度")]
+        private int _priority = 0;
 
-        /// <summary>判定対象となる RectTransform</summary>
-        public RectTransform TargetRectTransform {
-            get {
-                if (_targetRectTransform == null) {
-                    CacheRectTransform();
-                }
+        /// <inheritdoc/>
+        public int Priority => _priority;
 
-                return _targetRectTransform;
-            }
-        }
-
-        /// <summary>
-        /// エディタ追加時の参照を補完
-        /// </summary>
-        protected virtual void Reset() {
-            CacheRectTransform();
-        }
-
-        /// <summary>
-        /// 依存コンポーネントを初期化
-        /// </summary>
-        protected virtual void Awake() {
-            CacheRectTransform();
-        }
+        /// <inheritdoc/>
+        public bool IsActiveAndEnabled => isActiveAndEnabled;
 
         /// <summary>
         /// 有効化時に中央管理へ登録
         /// </summary>
         protected virtual void OnEnable() {
-            if (!Application.isPlaying) {
+            if (!Application.isPlaying || GestureCoordinator.Instance == null) {
                 return;
             }
 
@@ -49,27 +29,14 @@ namespace UnityEnhancedGesture {
         /// 無効化時に中央管理から解除
         /// </summary>
         protected virtual void OnDisable() {
-            if (!Application.isPlaying || !GestureCoordinator.HasInstance) {
+            if (!Application.isPlaying || GestureCoordinator.Instance == null) {
                 return;
             }
 
             GestureCoordinator.Instance.UnregisterHandler(this);
         }
 
-        /// <summary>
-        /// インスペクタ更新時の参照を補完
-        /// </summary>
-        protected virtual void OnValidate() {
-            CacheRectTransform();
-        }
-
-        /// <summary>
-        /// RectTransform 参照を補完
-        /// </summary>
-        private void CacheRectTransform() {
-            if (_targetRectTransform == null) {
-                _targetRectTransform = GetComponent<RectTransform>();
-            }
-        }
+        /// <inheritdoc/>
+        public abstract bool CanHandle(Vector2 screenPosition);
     }
 }
