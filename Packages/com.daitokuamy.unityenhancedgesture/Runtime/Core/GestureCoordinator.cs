@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace UnityEnhancedGesture {
@@ -30,6 +31,7 @@ namespace UnityEnhancedGesture {
         private readonly List<IGestureTrack> _tracks = new();
         private readonly List<IGestureTrack> _trackBuffer = new();
         private readonly List<IGestureRecognizer> _attachedRecognizerBuffer = new();
+        private readonly List<RaycastResult> _uiRaycastResults = new();
         private readonly GestureSimulationGui _simulationGui = new();
 
         private PointerMouseGestureInputProvider _mouseInputProvider;
@@ -328,13 +330,16 @@ namespace UnityEnhancedGesture {
             handler = null;
             var selectedPriority = int.MinValue;
 
+            CacheUIRaycastResults(screenPosition);
+
             for (var i = 0; i < _handlers.Count; i++) {
                 var currentHandler = _handlers[i];
 
                 if (currentHandler == null
                     || !currentHandler.IsActiveAndEnabled
                     || !currentHandler.CanHandle(screenPosition, _eventCamera)
-                    || !recognizer.CanCreateTrack(currentHandler)) {
+                    || !recognizer.CanCreateTrack(currentHandler)
+                    || IsBlockedByUIRaycast(currentHandler)) {
                     continue;
                 }
 
@@ -345,6 +350,50 @@ namespace UnityEnhancedGesture {
             }
 
             return handler != null;
+        }
+
+        /// <summary>
+        /// 指定座標にある uGUI RaycastTarget を収集
+        /// </summary>
+        /// <param name="screenPosition">画面座標</param>
+        private void CacheUIRaycastResults(Vector2 screenPosition) {
+            _uiRaycastResults.Clear();
+
+            var eventSystem = EventSystem.current;
+
+            if (eventSystem == null) {
+                return;
+            }
+
+            var pointerEventData = new PointerEventData(eventSystem) {
+                position = screenPosition,
+            };
+            eventSystem.RaycastAll(pointerEventData, _uiRaycastResults);
+        }
+
+        /// <summary>
+        /// uGUI RaycastTarget によってハンドラー開始がブロックされるかどうかを判定
+        /// </summary>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <returns>ブロックされる場合は true</returns>
+        private bool IsBlockedByUIRaycast(IGestureHandler handler) {
+            var gestureHandler = handler as GestureHandlerBase;
+
+            if (gestureHandler == null || !gestureHandler.IsBlockedByUI) {
+                return false;
+            }
+
+            for (var i = 0; i < _uiRaycastResults.Count; i++) {
+                var raycastTarget = _uiRaycastResults[i].gameObject;
+
+                if (raycastTarget == null) {
+                    continue;
+                }
+
+                return !gestureHandler.IsSelfUIRaycastTarget(raycastTarget);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -366,11 +415,16 @@ namespace UnityEnhancedGesture {
         /// <param name="attachedRecognizers">追加できた recognizer 一覧</param>
         private void TryAddPointerToTracks(GesturePointerInput input, List<IGestureRecognizer> attachedRecognizers) {
             attachedRecognizers.Clear();
+            CacheUIRaycastResults(input.Position);
 
             for (var i = 0; i < _tracks.Count; i++) {
                 var track = _tracks[i];
 
                 if (track == null || track.IsCompleted || track.Recognizer == null || HasPointer(track, input.PointerId)) {
+                    continue;
+                }
+
+                if (IsBlockedByUIRaycast(track.Handler)) {
                     continue;
                 }
 

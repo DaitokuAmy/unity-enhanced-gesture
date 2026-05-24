@@ -7,6 +7,8 @@ namespace UnityEnhancedGesture {
     public abstract class GestureHandlerBase : MonoBehaviour, IGestureHandler {
         [SerializeField, Tooltip("候補が重複した際の優先度")]
         private int _priority = 0;
+        [SerializeField, Tooltip("uGUI の RaycastTarget によって開始をブロックするかどうか")]
+        private bool _isBlockedByUI = true;
 
         /// <summary>
         /// 候補が重複した際の優先度
@@ -14,6 +16,14 @@ namespace UnityEnhancedGesture {
         public int Priority {
             get => _priority;
             set => _priority = value;
+        }
+
+        /// <summary>
+        /// uGUI の RaycastTarget によって開始をブロックするかどうか
+        /// </summary>
+        public bool IsBlockedByUI {
+            get => _isBlockedByUI;
+            set => _isBlockedByUI = value;
         }
 
         /// <inheritdoc/>
@@ -43,6 +53,15 @@ namespace UnityEnhancedGesture {
 
         /// <inheritdoc/>
         public abstract bool CanHandle(Vector2 screenPosition, Camera eventCamera);
+
+        /// <summary>
+        /// 指定 uGUI RaycastTarget が自身の対象かどうかを判定
+        /// </summary>
+        /// <param name="raycastTarget">RaycastTarget の GameObject</param>
+        /// <returns>自身の対象の場合は true</returns>
+        internal virtual bool IsSelfUIRaycastTarget(GameObject raycastTarget) {
+            return false;
+        }
 
         /// <summary>
         /// RectTransform 判定に使用する Canvas カメラを取得

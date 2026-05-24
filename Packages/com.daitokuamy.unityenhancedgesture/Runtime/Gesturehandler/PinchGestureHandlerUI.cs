@@ -56,5 +56,12 @@ namespace UnityEnhancedGesture {
         public void HandleCancelPinch(PinchGestureEvent gestureEvent) {
             CancelPinchEvent?.Invoke(gestureEvent);
         }
+
+        /// <inheritdoc/>
+        internal override bool IsSelfUIRaycastTarget(GameObject raycastTarget) {
+            return _targetRectTransform != null
+                && raycastTarget != null
+                && raycastTarget.transform == _targetRectTransform;
+        }
     }
 }

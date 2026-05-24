@@ -13,6 +13,7 @@ namespace UnityEnhancedGesture.Editor {
         public override void OnInspectorGUI() {
             serializedObject.Update();
             DrawPriority();
+            DrawUIBlocking();
 
             if (target is DragGestureHandlerUI) {
                 DrawDragInspector("_targetRectTransform");
@@ -44,6 +45,13 @@ namespace UnityEnhancedGesture.Editor {
         /// </summary>
         private void DrawPriority() {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_priority"));
+        }
+
+        /// <summary>
+        /// uGUI ブロック設定を描画
+        /// </summary>
+        private void DrawUIBlocking() {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_isBlockedByUI"));
         }
 
         /// <summary>
