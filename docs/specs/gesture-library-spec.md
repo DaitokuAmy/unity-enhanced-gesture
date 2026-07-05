@@ -279,7 +279,8 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 座標をどう判定するか、`RectTransform` を使うかどうかは Handler 側の都合として扱う
 - 開始時には候補 Handler 群を集め、その中から最終的な配送先 Handler を 1 つだけ選ぶ
 - 複数 Handler が候補になる場合は、`Priority` の数値が最も高い Handler を優先する
-- `Priority` が同値の場合は登録順で決定する
+- `Priority` が同値かつ両 Handler がヒット距離を提供できる場合は、ヒット距離が近い Handler を優先する
+- `Priority` が同値で距離比較できない場合は登録順で決定する
 - 開始時にイベント送信対象となった Handler は `GestureCoordinator` が入力系列単位で保持する
 - `Drag` の開始イベントを受けていない Handler に、`Drag` 中イベントや終了イベントを送らない
 - 開始イベントを送った Handler には、終了またはキャンセルまで後続イベントを確実に送る
@@ -306,7 +307,7 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - `Recognizer` の解決は `GestureCoordinator` が行い、`Type` ベースの反射生成は使わない
 - `RectTransform` を対象にする `Drag` Handler は、uGUI 前提であることが分かる命名にする
 - `RectTransform` 版は `Canvas` 文脈のカメラを使い、`GestureCoordinator` の共有カメラには依存しない
-- `Collider` を対象にする別の `Drag` Handler を用意し、こちらは `GestureCoordinator` の共有カメラを使って判定する
+- `Collider` 群を対象にする別の `Drag` Handler を用意し、こちらは `GestureCoordinator` の共有カメラを使って判定する
 - `GestureCoordinator` の共有カメラは外部へ `public` 公開せず、必要な情報は `GestureEvent` 側へ載せて利用する
 ## 追加メモ 2026-04-26
 

@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
     /// <summary>
     /// Collider を対象にピンチイベントを公開するハンドラー
     /// </summary>
-    public sealed class PinchGestureHandler3D : GestureHandlerBase, IPinchGestureHandler {
-        [SerializeField, Tooltip("ピンチ対象 Collider")]
-        private Collider _targetCollider = null;
+    public sealed class PinchGestureHandler3D : GestureHandlerBase, IPinchGestureHandler, IGestureHitDistanceProvider {
+        [SerializeField, Tooltip("ピンチ対象 Collider 群")]
+        private Collider[] _targetColliders = Array.Empty<Collider>();
         [SerializeField, Tooltip("ピンチ開始しきい値")]
         private float _pinchStartThreshold = 8.0f;
 
-        /// <summary>ピンチ対象 Collider</summary>
-        public Collider TargetCollider => _targetCollider;
+        /// <summary>ピンチ対象 Collider 群</summary>
+        public IReadOnlyList<Collider> TargetColliders => _targetColliders;
         /// <inheritdoc/>
         public float PinchStartThreshold => _pinchStartThreshold;
 
@@ -27,12 +28,19 @@ namespace UnityEnhancedGesture {
 
         /// <inheritdoc/>
         public override bool CanHandle(Vector2 screenPosition, Camera eventCamera) {
-            if (_targetCollider == null || eventCamera == null) {
+            return TryGetHandleDistance(screenPosition, eventCamera, out _);
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetHandleDistance(Vector2 screenPosition, Camera eventCamera, out float distance) {
+            distance = float.PositiveInfinity;
+
+            if (eventCamera == null) {
                 return false;
             }
 
             var ray = eventCamera.ScreenPointToRay(screenPosition);
-            return _targetCollider.Raycast(ray, out _, float.PositiveInfinity);
+            return TryGetClosestColliderHitDistance(_targetColliders, ray, out distance);
         }
 
         /// <inheritdoc/>

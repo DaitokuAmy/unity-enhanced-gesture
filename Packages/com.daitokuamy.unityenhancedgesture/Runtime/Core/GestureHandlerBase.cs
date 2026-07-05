@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
@@ -53,6 +54,38 @@ namespace UnityEnhancedGesture {
 
         /// <inheritdoc/>
         public abstract bool CanHandle(Vector2 screenPosition, Camera eventCamera);
+
+        /// <summary>
+        /// 指定 Collider 群の最も近いヒット距離を取得
+        /// </summary>
+        /// <param name="targetColliders">判定対象 Collider 群</param>
+        /// <param name="ray">判定に使用する Ray</param>
+        /// <param name="distance">最も近いヒット距離</param>
+        /// <returns>いずれかの Collider にヒットした場合は true</returns>
+        protected static bool TryGetClosestColliderHitDistance(IReadOnlyList<Collider> targetColliders, Ray ray, out float distance) {
+            distance = float.PositiveInfinity;
+
+            if (targetColliders == null) {
+                return false;
+            }
+
+            var hasHit = false;
+
+            for (var i = 0; i < targetColliders.Count; i++) {
+                var targetCollider = targetColliders[i];
+
+                if (targetCollider == null || !targetCollider.Raycast(ray, out var hit, float.PositiveInfinity)) {
+                    continue;
+                }
+
+                if (!hasHit || hit.distance < distance) {
+                    distance = hit.distance;
+                    hasHit = true;
+                }
+            }
+
+            return hasHit;
+        }
 
         /// <summary>
         /// 指定 uGUI RaycastTarget が自身の対象かどうかを判定

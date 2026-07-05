@@ -19,19 +19,19 @@ namespace UnityEnhancedGesture.Editor {
                 DrawDragInspector("_targetRectTransform");
             }
             else if (target is DragGestureHandler3D) {
-                DrawDragInspector("_targetCollider");
+                DrawDragInspector("_targetColliders");
             }
             else if (target is TapGestureHandlerUI) {
                 DrawTapInspector("_targetRectTransform");
             }
             else if (target is TapGestureHandler3D) {
-                DrawTapInspector("_targetCollider");
+                DrawTapInspector("_targetColliders");
             }
             else if (target is PinchGestureHandlerUI) {
                 DrawPinchInspector("_targetRectTransform");
             }
             else if (target is PinchGestureHandler3D) {
-                DrawPinchInspector("_targetCollider");
+                DrawPinchInspector("_targetColliders");
             }
             else {
                 DrawDefaultInspector();

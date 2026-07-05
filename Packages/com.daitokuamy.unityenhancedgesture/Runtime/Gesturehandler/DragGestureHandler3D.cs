@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
     /// <summary>
     /// Collider を対象にドラッグイベントを公開するハンドラー
     /// </summary>
-    public sealed class DragGestureHandler3D : GestureHandlerBase, IDragGestureHandler {
-        [SerializeField, Tooltip("ドラッグ対象 Collider")]
-        private Collider _targetCollider = null;
+    public sealed class DragGestureHandler3D : GestureHandlerBase, IDragGestureHandler, IGestureHitDistanceProvider {
+        [SerializeField, Tooltip("ドラッグ対象 Collider 群")]
+        private Collider[] _targetColliders = Array.Empty<Collider>();
         [SerializeField, Tooltip("ドラッグ開始とみなす移動量")]
         private float _dragStartThreshold = 12.0f;
         [SerializeField, Tooltip("ロングタップドラッグを有効化するかどうか")]
@@ -17,8 +18,8 @@ namespace UnityEnhancedGesture {
         [SerializeField, Tooltip("ロングタップドラッグ成立までの許容移動量")]
         private float _longTapDragMaxMovement = 12.0f;
 
-        /// <summary>ドラッグ対象 Collider</summary>
-        public Collider TargetCollider => _targetCollider;
+        /// <summary>ドラッグ対象 Collider 群</summary>
+        public IReadOnlyList<Collider> TargetColliders => _targetColliders;
         /// <inheritdoc/>
         public float DragStartThreshold => _dragStartThreshold;
         /// <inheritdoc/>
@@ -39,12 +40,19 @@ namespace UnityEnhancedGesture {
 
         /// <inheritdoc/>
         public override bool CanHandle(Vector2 screenPosition, Camera eventCamera) {
-            if (_targetCollider == null || eventCamera == null) {
+            return TryGetHandleDistance(screenPosition, eventCamera, out _);
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetHandleDistance(Vector2 screenPosition, Camera eventCamera, out float distance) {
+            distance = float.PositiveInfinity;
+
+            if (eventCamera == null) {
                 return false;
             }
 
             var ray = eventCamera.ScreenPointToRay(screenPosition);
-            return _targetCollider.Raycast(ray, out _, float.PositiveInfinity);
+            return TryGetClosestColliderHitDistance(_targetColliders, ray, out distance);
         }
 
         /// <inheritdoc/>

@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEnhancedGesture {
     /// <summary>
     /// Collider を対象にタップイベントを公開するハンドラー
     /// </summary>
-    public sealed class TapGestureHandler3D : GestureHandlerBase, ITapGestureHandler {
-        [SerializeField, Tooltip("タップ対象 Collider")]
-        private Collider _targetCollider = null;
+    public sealed class TapGestureHandler3D : GestureHandlerBase, ITapGestureHandler, IGestureHitDistanceProvider {
+        [SerializeField, Tooltip("タップ対象 Collider 群")]
+        private Collider[] _targetColliders = Array.Empty<Collider>();
         [SerializeField, Tooltip("単一タップとして認める最大継続時間")]
         private float _maxTapDuration = 0.25f;
         [SerializeField, Tooltip("単一タップとして認める最大移動量")]
@@ -25,8 +26,8 @@ namespace UnityEnhancedGesture {
         [SerializeField, Tooltip("ロングタップ成立までの許容移動量")]
         private float _longTapMaxMovement = 12.0f;
 
-        /// <summary>タップ対象 Collider</summary>
-        public Collider TargetCollider => _targetCollider;
+        /// <summary>タップ対象 Collider 群</summary>
+        public IReadOnlyList<Collider> TargetColliders => _targetColliders;
         /// <inheritdoc/>
         public float MaxTapDuration => _maxTapDuration;
         /// <inheritdoc/>
@@ -53,12 +54,19 @@ namespace UnityEnhancedGesture {
 
         /// <inheritdoc/>
         public override bool CanHandle(Vector2 screenPosition, Camera eventCamera) {
-            if (_targetCollider == null || eventCamera == null) {
+            return TryGetHandleDistance(screenPosition, eventCamera, out _);
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetHandleDistance(Vector2 screenPosition, Camera eventCamera, out float distance) {
+            distance = float.PositiveInfinity;
+
+            if (eventCamera == null) {
                 return false;
             }
 
             var ray = eventCamera.ScreenPointToRay(screenPosition);
-            return _targetCollider.Raycast(ray, out _, float.PositiveInfinity);
+            return TryGetClosestColliderHitDistance(_targetColliders, ray, out distance);
         }
 
         /// <inheritdoc/>

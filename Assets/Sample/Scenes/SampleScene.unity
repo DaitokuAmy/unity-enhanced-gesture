@@ -349,7 +349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 53567094}
+  _targetColliders:
+  - {fileID: 53567094}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -480,7 +481,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 147207691}
+  _targetColliders:
+  - {fileID: 147207691}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -658,7 +660,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 155324849}
+  _targetColliders:
+  - {fileID: 155324849}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -789,7 +792,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 167649373}
+  _targetColliders:
+  - {fileID: 167649373}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -920,7 +924,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 212957273}
+  _targetColliders:
+  - {fileID: 212957273}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -1051,7 +1056,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 263923805}
+  _targetColliders:
+  - {fileID: 263923805}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -1182,7 +1188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 285784540}
+  _targetColliders:
+  - {fileID: 285784540}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -1313,7 +1320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 301612206}
+  _targetColliders:
+  - {fileID: 301612206}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -1444,7 +1452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 312201375}
+  _targetColliders:
+  - {fileID: 312201375}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -1575,7 +1584,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 329021356}
+  _targetColliders:
+  - {fileID: 329021356}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -1955,7 +1965,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 375402898}
+  _targetColliders:
+  - {fileID: 375402898}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -2086,7 +2097,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 380649416}
+  _targetColliders:
+  - {fileID: 380649416}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -2217,7 +2229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 395127517}
+  _targetColliders:
+  - {fileID: 395127517}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -2550,7 +2563,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 519573938}
+  _targetColliders:
+  - {fileID: 519573938}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -2735,7 +2749,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 702665198}
+  _targetColliders:
+  - {fileID: 702665198}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -2866,7 +2881,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 706555994}
+  _targetColliders:
+  - {fileID: 706555994}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3078,7 +3094,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 773530060}
+  _targetColliders:
+  - {fileID: 773530060}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3258,7 +3275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 898384031}
+  _targetColliders:
+  - {fileID: 898384031}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3389,7 +3407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 966877548}
+  _targetColliders:
+  - {fileID: 966877548}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3520,7 +3539,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1029870732}
+  _targetColliders:
+  - {fileID: 1029870732}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3651,7 +3671,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1130010983}
+  _targetColliders:
+  - {fileID: 1130010983}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3782,7 +3803,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1185650203}
+  _targetColliders:
+  - {fileID: 1185650203}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -3913,7 +3935,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1196762938}
+  _targetColliders:
+  - {fileID: 1196762938}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4044,7 +4067,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1231136224}
+  _targetColliders:
+  - {fileID: 1231136224}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4175,7 +4199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1263179918}
+  _targetColliders:
+  - {fileID: 1263179918}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4306,7 +4331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1263560683}
+  _targetColliders:
+  - {fileID: 1263560683}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4437,7 +4463,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1287529076}
+  _targetColliders:
+  - {fileID: 1287529076}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4568,7 +4595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1345788470}
+  _targetColliders:
+  - {fileID: 1345788470}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4699,7 +4727,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1364713474}
+  _targetColliders:
+  - {fileID: 1364713474}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -4881,7 +4910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1417639249}
+  _targetColliders:
+  - {fileID: 1417639249}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5012,7 +5042,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1443942614}
+  _targetColliders:
+  - {fileID: 1443942614}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5143,7 +5174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1464135163}
+  _targetColliders:
+  - {fileID: 1464135163}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5274,7 +5306,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1553187545}
+  _targetColliders:
+  - {fileID: 1553187545}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5405,7 +5438,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1563705957}
+  _targetColliders:
+  - {fileID: 1563705957}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5536,7 +5570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1565568822}
+  _targetColliders:
+  - {fileID: 1565568822}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5667,7 +5702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1589654736}
+  _targetColliders:
+  - {fileID: 1589654736}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5798,7 +5834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1599033982}
+  _targetColliders:
+  - {fileID: 1599033982}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -5929,7 +5966,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1712870614}
+  _targetColliders:
+  - {fileID: 1712870614}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -6060,7 +6098,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1736161954}
+  _targetColliders:
+  - {fileID: 1736161954}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -6191,7 +6230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1790817045}
+  _targetColliders:
+  - {fileID: 1790817045}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -6404,7 +6444,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1848186084}
+  _targetColliders:
+  - {fileID: 1848186084}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -6614,7 +6655,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1936262394}
+  _targetColliders:
+  - {fileID: 1936262394}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -6745,7 +6787,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1945481148}
+  _targetColliders:
+  - {fileID: 1945481148}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -6876,7 +6919,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 1968022667}
+  _targetColliders:
+  - {fileID: 1968022667}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -7007,7 +7051,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 2001449435}
+  _targetColliders:
+  - {fileID: 2001449435}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -7138,7 +7183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 2030691508}
+  _targetColliders:
+  - {fileID: 2030691508}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -7269,7 +7315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 2056621634}
+  _targetColliders:
+  - {fileID: 2056621634}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -7400,7 +7447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 2116519261}
+  _targetColliders:
+  - {fileID: 2116519261}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -7531,7 +7579,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 2125198689}
+  _targetColliders:
+  - {fileID: 2125198689}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5
@@ -7662,7 +7711,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
-  _targetCollider: {fileID: 2131370022}
+  _targetColliders:
+  - {fileID: 2131370022}
   _dragStartThreshold: 12
   _enableLongTapDrag: 1
   _longTapDragDuration: 0.5

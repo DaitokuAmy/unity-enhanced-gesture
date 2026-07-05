@@ -92,7 +92,7 @@ https://github.com/DaitokuAmy/unity-enhanced-gesture.git?path=/Packages/com.dait
 - `TapGestureHandler3D`
 - `PinchGestureHandler3D`
 
-それぞれ対象の `Collider` を設定します。`3D` ハンドラーを使う場合は、`GestureCoordinator` の `Event Camera` も設定してください。
+それぞれ対象の `Collider` 群を設定します。`3D` ハンドラーを使う場合は、`GestureCoordinator` の `Event Camera` も設定してください。
 
 ### 3. スクリプトからイベントを購読
 
@@ -256,7 +256,7 @@ public sealed class GestureCoordinatorDriver : MonoBehaviour {
 
 ## 優先度 (`Priority`) と競合
 
-開始位置に対して複数のハンドラーが反応可能な場合は、`Priority` が高いハンドラーが優先されます。  
+開始位置に対して複数のハンドラーが反応可能な場合は、`Priority` が高いハンドラーが優先されます。`Priority` が同じ場合、3D ハンドラー同士はカメラからのヒット距離が近いものが優先され、それ以外は登録順で決定されます。
 同じオブジェクトに複数のジェスチャー種別を共存させることはできますが、同じ種別で重なる構成では `Priority` を明示しておくと意図が分かりやすくなります。
 
 ## Unity Editor での動作確認

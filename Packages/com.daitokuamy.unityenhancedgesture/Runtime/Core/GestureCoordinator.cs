@@ -329,6 +329,8 @@ namespace UnityEnhancedGesture {
         private bool TrySelectHandler(Vector2 screenPosition, IGestureRecognizer recognizer, out IGestureHandler handler) {
             handler = null;
             var selectedPriority = int.MinValue;
+            var selectedDistance = float.PositiveInfinity;
+            var hasSelectedDistance = false;
 
             CacheUIRaycastResults(screenPosition);
 
@@ -337,19 +339,79 @@ namespace UnityEnhancedGesture {
 
                 if (currentHandler == null
                     || !currentHandler.IsActiveAndEnabled
-                    || !currentHandler.CanHandle(screenPosition, _eventCamera)
                     || !recognizer.CanCreateTrack(currentHandler)
                     || IsBlockedByUIRaycast(currentHandler)) {
                     continue;
                 }
 
-                if (handler == null || currentHandler.Priority > selectedPriority) {
+                var hasCurrentDistance = TryGetHandleDistance(currentHandler, screenPosition, out var currentDistance);
+
+                if (!hasCurrentDistance && !currentHandler.CanHandle(screenPosition, _eventCamera)) {
+                    continue;
+                }
+
+                if (ShouldReplaceSelectedHandler(
+                    handler,
+                    currentHandler,
+                    selectedPriority,
+                    currentDistance,
+                    selectedDistance,
+                    hasCurrentDistance,
+                    hasSelectedDistance)) {
                     handler = currentHandler;
                     selectedPriority = currentHandler.Priority;
+                    selectedDistance = currentDistance;
+                    hasSelectedDistance = hasCurrentDistance;
                 }
             }
 
             return handler != null;
+        }
+
+        /// <summary>
+        /// 指定ハンドラーのヒット距離を取得
+        /// </summary>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="screenPosition">画面座標</param>
+        /// <param name="distance">ヒット距離</param>
+        /// <returns>ヒット距離を取得できた場合は true</returns>
+        private bool TryGetHandleDistance(IGestureHandler handler, Vector2 screenPosition, out float distance) {
+            if (handler is IGestureHitDistanceProvider hitDistanceProvider) {
+                return hitDistanceProvider.TryGetHandleDistance(screenPosition, _eventCamera, out distance);
+            }
+
+            distance = float.PositiveInfinity;
+            return false;
+        }
+
+        /// <summary>
+        /// 選択中ハンドラーを現在候補で置き換えるかどうかを判定
+        /// </summary>
+        /// <param name="selectedHandler">選択中ハンドラー</param>
+        /// <param name="currentHandler">現在候補ハンドラー</param>
+        /// <param name="selectedPriority">選択中ハンドラーの優先度</param>
+        /// <param name="currentDistance">現在候補ハンドラーのヒット距離</param>
+        /// <param name="selectedDistance">選択中ハンドラーのヒット距離</param>
+        /// <param name="hasCurrentDistance">現在候補ハンドラーがヒット距離を持つかどうか</param>
+        /// <param name="hasSelectedDistance">選択中ハンドラーがヒット距離を持つかどうか</param>
+        /// <returns>置き換える場合は true</returns>
+        private bool ShouldReplaceSelectedHandler(
+            IGestureHandler selectedHandler,
+            IGestureHandler currentHandler,
+            int selectedPriority,
+            float currentDistance,
+            float selectedDistance,
+            bool hasCurrentDistance,
+            bool hasSelectedDistance) {
+            if (selectedHandler == null || currentHandler.Priority > selectedPriority) {
+                return true;
+            }
+
+            if (currentHandler.Priority < selectedPriority) {
+                return false;
+            }
+
+            return hasCurrentDistance && hasSelectedDistance && currentDistance < selectedDistance;
         }
 
         /// <summary>
