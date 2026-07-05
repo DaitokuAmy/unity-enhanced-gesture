@@ -168,7 +168,7 @@ public sealed class GestureCoordinatorDriver : MonoBehaviour {
 
 ### ドラッグ
 
-ドラッグ系は `BeginDragEvent` / `DragEvent` / `EndDragEvent` / `CancelDragEvent` を購読します。
+ドラッグ系は `BeginDragEvent` / `DragEvent` / `EndDragEvent` / `CancelDragEvent` を購読します。ロングタップドラッグの判定開始、進捗、完了、キャンセルを扱う場合は `LongTapDragProgressEvent` を購読します。
 
 主な設定項目:
 
@@ -192,9 +192,25 @@ public sealed class GestureCoordinatorDriver : MonoBehaviour {
 - `ActivePointerCount`
 - `EventCamera`
 
+`LongTapDragProgressGestureEvent` から主に次を取得できます。
+
+- `Phase`
+  - `Began`
+  - `Updated`
+  - `Completed`
+  - `Canceled`
+- `Progress`
+- `StartPosition`
+- `Position`
+- `Samples`
+- `Duration`
+- `RequiredDuration`
+- `MaxMovement`
+- `EventCamera`
+
 ### タップ
 
-タップ系は `TapEvent` / `DoubleTapEvent` / `LongTapEvent` を購読します。
+タップ系は `TapEvent` / `DoubleTapEvent` / `LongTapEvent` を購読します。ロングタップの判定開始、進捗、完了、キャンセルを扱う場合は `LongTapProgressEvent` を購読します。
 
 主な設定項目:
 
@@ -221,6 +237,22 @@ public sealed class GestureCoordinatorDriver : MonoBehaviour {
 - `Samples`
 - `Duration`
 - `Interval`
+- `EventCamera`
+
+`LongTapProgressGestureEvent` から主に次を取得できます。
+
+- `Phase`
+  - `Began`
+  - `Updated`
+  - `Completed`
+  - `Canceled`
+- `Progress`
+- `StartPosition`
+- `Position`
+- `Samples`
+- `Duration`
+- `RequiredDuration`
+- `MaxMovement`
 - `EventCamera`
 
 注意点:
@@ -258,6 +290,7 @@ public sealed class GestureCoordinatorDriver : MonoBehaviour {
 
 開始位置に対して複数のハンドラーが反応可能な場合は、`Priority` が高いハンドラーが優先されます。`Priority` が同じ場合、3D ハンドラー同士はカメラからのヒット距離が近いものが優先され、それ以外は登録順で決定されます。
 同じオブジェクトに複数のジェスチャー種別を共存させることはできますが、同じ種別で重なる構成では `Priority` を明示しておくと意図が分かりやすくなります。
+ハンドラーが無効化された場合、そのハンドラーの進行中ジェスチャーはキャンセルされ、以降の更新や完了イベントは送信されません。
 
 ## Unity Editor での動作確認
 

@@ -38,5 +38,12 @@ namespace UnityEnhancedGesture {
         /// <param name="track">対象トラック</param>
         /// <param name="input">現在の入力情報</param>
         void ProcessTrack(IGestureTrack track, IReadOnlyDictionary<int, GesturePointerInput> inputsByPointerId, float currentTime);
+
+        /// <summary>
+        /// 入力トラックをキャンセル
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="currentTime">現在時刻</param>
+        void CancelTrack(IGestureTrack track, float currentTime);
     }
 }

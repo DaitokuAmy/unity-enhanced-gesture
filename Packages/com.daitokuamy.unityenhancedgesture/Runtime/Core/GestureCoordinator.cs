@@ -136,6 +136,7 @@ namespace UnityEnhancedGesture {
         /// <param name="handler">解除対象ハンドラー</param>
         public void UnregisterHandler(IGestureHandler handler) {
             _handlers.Remove(handler);
+            CancelTracksForHandler(handler);
         }
 
         /// <summary>
@@ -468,6 +469,44 @@ namespace UnityEnhancedGesture {
             }
 
             track.Recognizer.ProcessTrack(track, _inputsByPointerId, Time.unscaledTime);
+        }
+
+        /// <summary>
+        /// 指定ハンドラーに紐づく進行中トラックをキャンセル
+        /// </summary>
+        /// <param name="handler">対象ハンドラー</param>
+        private void CancelTracksForHandler(IGestureHandler handler) {
+            if (handler == null) {
+                return;
+            }
+
+            var tracksToCancel = new List<IGestureTrack>();
+            var currentTime = Time.unscaledTime;
+
+            for (var i = 0; i < _tracks.Count; i++) {
+                var track = _tracks[i];
+
+                if (track == null
+                    || track.IsCompleted
+                    || track.Recognizer == null
+                    || !ReferenceEquals(track.Handler, handler)) {
+                    continue;
+                }
+
+                tracksToCancel.Add(track);
+            }
+
+            for (var i = 0; i < tracksToCancel.Count; i++) {
+                var track = tracksToCancel[i];
+
+                if (track == null || track.IsCompleted || track.Recognizer == null) {
+                    continue;
+                }
+
+                track.Recognizer.CancelTrack(track, currentTime);
+            }
+
+            CleanupCompletedTracks();
         }
 
         /// <summary>

@@ -50,6 +50,8 @@ namespace UnityEnhancedGesture {
         public event Action<TapGestureEvent> DoubleTapEvent;
         /// <summary>ロングタップ時に通知するイベント</summary>
         public event Action<TapGestureEvent> LongTapEvent;
+        /// <summary>ロングタップ進捗時に通知するイベント</summary>
+        public event Action<LongTapProgressGestureEvent> LongTapProgressEvent;
 
         /// <inheritdoc/>
         public override bool CanHandle(Vector2 screenPosition, Camera eventCamera) {
@@ -76,6 +78,11 @@ namespace UnityEnhancedGesture {
         /// <inheritdoc/>
         public void HandleLongTap(TapGestureEvent gestureEvent) {
             LongTapEvent?.Invoke(gestureEvent);
+        }
+
+        /// <inheritdoc/>
+        public void HandleLongTapProgress(LongTapProgressGestureEvent gestureEvent) {
+            LongTapProgressEvent?.Invoke(gestureEvent);
         }
 
         /// <inheritdoc/>

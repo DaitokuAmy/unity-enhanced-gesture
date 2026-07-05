@@ -35,5 +35,11 @@ namespace UnityEnhancedGesture {
         /// </summary>
         /// <param name="gestureEvent">通知内容</param>
         void HandleCancelDrag(DragGestureEvent gestureEvent);
+
+        /// <summary>
+        /// ロングタップドラッグ進捗イベントを受け取る
+        /// </summary>
+        /// <param name="gestureEvent">イベント引数</param>
+        void HandleLongTapDragProgress(LongTapDragProgressGestureEvent gestureEvent);
     }
 }

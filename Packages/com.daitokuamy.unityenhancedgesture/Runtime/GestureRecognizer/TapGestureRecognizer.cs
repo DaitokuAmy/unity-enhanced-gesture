@@ -32,6 +32,10 @@ namespace UnityEnhancedGesture {
             public bool IsWaitingForSecondTap { get; set; }
             /// <summary>2回目タップ中かどうか</summary>
             public bool IsSecondTap { get; set; }
+            /// <summary>ロングタップ進捗通知を開始済みかどうか</summary>
+            public bool HasLongTapProgressBegun { get; set; }
+            /// <summary>ロングタップ候補として継続できるかどうか</summary>
+            public bool CanContinueLongTap { get; set; } = true;
             /// <summary>最初のタップ位置</summary>
             public Vector2 FirstTapPosition { get; private set; }
             /// <summary>最初のタップ終了位置</summary>
@@ -42,6 +46,12 @@ namespace UnityEnhancedGesture {
             public float FirstTapCompletedTime { get; private set; }
             /// <summary>最初のタップ履歴</summary>
             public GesturePointerSample[] FirstTapSamples { get; private set; } = Array.Empty<GesturePointerSample>();
+            /// <summary>最後に確認した現在位置</summary>
+            public Vector2 LastPosition { get; private set; }
+            /// <summary>最後に確認したサンプル列</summary>
+            public GesturePointerSample[] LastSamples { get; private set; } = Array.Empty<GesturePointerSample>();
+            /// <summary>最後に確認した時刻</summary>
+            public float LastTime { get; private set; }
 
             /// <summary>
             /// トラックを生成
@@ -66,6 +76,19 @@ namespace UnityEnhancedGesture {
                 _pointerIds.Add(input.PointerId);
                 ActiveStartPosition = input.StartPosition;
                 ActiveStartTime = input.StartTime;
+                HasLongTapProgressBegun = false;
+                CanContinueLongTap = true;
+                UpdateLastInput(input);
+            }
+
+            /// <summary>
+            /// 最後に確認した入力状態を更新
+            /// </summary>
+            /// <param name="input">現在入力</param>
+            public void UpdateLastInput(GesturePointerInput input) {
+                LastPosition = input.Position;
+                LastSamples = input.Samples;
+                LastTime = input.Time;
             }
 
             /// <summary>
@@ -158,31 +181,74 @@ namespace UnityEnhancedGesture {
                 return;
             }
 
+            tapTrack.UpdateLastInput(input);
+
             var duration = input.Time - tapTrack.ActiveStartTime;
             var movement = Vector2.Distance(tapTrack.ActiveStartPosition, input.Position);
             var canBecomeTap = movement <= tapHandler.MaxTapMovement && duration <= tapHandler.MaxTapDuration;
+
+            if (tapTrack.CanContinueLongTap && movement > tapHandler.LongTapMaxMovement) {
+                tapTrack.CanContinueLongTap = false;
+            }
+
             var canBecomeLongTap = tapHandler.EnableLongTap
                 && !tapTrack.IsSecondTap
-                && movement <= tapHandler.LongTapMaxMovement;
+                && tapTrack.CanContinueLongTap;
+            var sentLongTapProgressBegan = false;
 
             if (input.Phase == GestureInputPhase.Canceled) {
                 tapTrack.IsCompleted = true;
+                CancelLongTapProgressIfNeeded(tapTrack, tapHandler, input, duration);
                 return;
+            }
+
+            if (tapTrack.HasLongTapProgressBegun && !canBecomeLongTap) {
+                CancelLongTapProgressIfNeeded(tapTrack, tapHandler, input, duration);
+
+                if (tapTrack.IsCompleted) {
+                    return;
+                }
             }
 
             if (!canBecomeTap && !canBecomeLongTap) {
                 tapTrack.IsCompleted = true;
+                CancelLongTapProgressIfNeeded(tapTrack, tapHandler, input, duration);
                 return;
             }
 
+            if (canBecomeLongTap && !tapTrack.HasLongTapProgressBegun) {
+                tapTrack.HasLongTapProgressBegun = true;
+                sentLongTapProgressBegan = true;
+                tapHandler.HandleLongTapProgress(CreateLongTapProgressEvent(tapTrack, tapHandler, input, GestureEventPhase.Began, duration));
+
+                if (tapTrack.IsCompleted) {
+                    return;
+                }
+            }
+
             if (canBecomeLongTap && duration >= tapHandler.LongTapDuration) {
-                tapHandler.HandleLongTap(CreateCurrentTapEvent(tapTrack, input, TapGestureType.LongTap, 1, 0.0f));
                 tapTrack.IsCompleted = true;
                 tapTrack.ClearPointer();
+                CompleteLongTapProgressIfNeeded(tapTrack, tapHandler, input, duration);
+                tapHandler.HandleLongTap(CreateCurrentTapEvent(tapTrack, input, TapGestureType.LongTap, 1, 0.0f));
                 return;
             }
 
             if (input.Phase != GestureInputPhase.Ended) {
+                if (canBecomeLongTap && tapTrack.HasLongTapProgressBegun && !sentLongTapProgressBegan) {
+                    tapHandler.HandleLongTapProgress(CreateLongTapProgressEvent(tapTrack, tapHandler, input, GestureEventPhase.Updated, duration));
+
+                    if (tapTrack.IsCompleted) {
+                        return;
+                    }
+                }
+
+                return;
+            }
+
+            CancelLongTapProgressIfNeeded(tapTrack, tapHandler, input, duration);
+
+            if (tapTrack.IsCompleted) {
                 return;
             }
 
@@ -213,6 +279,16 @@ namespace UnityEnhancedGesture {
             tapTrack.StoreFirstTap(input, duration);
         }
 
+        /// <inheritdoc/>
+        public void CancelTrack(IGestureTrack track, float currentTime) {
+            var tapTrack = (TapGestureTrack)track;
+            var tapHandler = (ITapGestureHandler)tapTrack.Handler;
+
+            CancelLongTapProgressIfNeeded(tapTrack, tapHandler, currentTime);
+            tapTrack.ClearPointer();
+            tapTrack.IsCompleted = true;
+        }
+
         /// <summary>
         /// 現在タップからイベント引数を生成
         /// </summary>
@@ -234,6 +310,104 @@ namespace UnityEnhancedGesture {
                 input.Time - track.ActiveStartTime,
                 interval,
                 track.EventCamera);
+        }
+
+        /// <summary>
+        /// ロングタップ進捗イベント引数を生成
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="input">現在入力</param>
+        /// <param name="phase">イベントフェーズ</param>
+        /// <param name="duration">開始からの経過時間</param>
+        /// <returns>生成したイベント引数</returns>
+        private LongTapProgressGestureEvent CreateLongTapProgressEvent(
+            TapGestureTrack track,
+            ITapGestureHandler handler,
+            GesturePointerInput input,
+            GestureEventPhase phase,
+            float duration) {
+            return new LongTapProgressGestureEvent(
+                phase,
+                track.ActiveStartPosition,
+                input.Position,
+                input.Samples,
+                duration,
+                handler.LongTapDuration,
+                handler.LongTapMaxMovement,
+                track.EventCamera);
+        }
+
+        /// <summary>
+        /// 保存済み入力状態からロングタップ進捗イベント引数を生成
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="phase">イベントフェーズ</param>
+        /// <param name="currentTime">現在時刻</param>
+        /// <returns>生成したイベント引数</returns>
+        private LongTapProgressGestureEvent CreateStoredLongTapProgressEvent(
+            TapGestureTrack track,
+            ITapGestureHandler handler,
+            GestureEventPhase phase,
+            float currentTime) {
+            var duration = Mathf.Max(0.0f, currentTime - track.ActiveStartTime);
+            return new LongTapProgressGestureEvent(
+                phase,
+                track.ActiveStartPosition,
+                track.LastPosition,
+                track.LastSamples,
+                duration,
+                handler.LongTapDuration,
+                handler.LongTapMaxMovement,
+                track.EventCamera);
+        }
+
+        /// <summary>
+        /// ロングタップ進捗を完了通知
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="input">現在入力</param>
+        /// <param name="duration">開始からの経過時間</param>
+        private void CompleteLongTapProgressIfNeeded(TapGestureTrack track, ITapGestureHandler handler, GesturePointerInput input, float duration) {
+            if (!track.HasLongTapProgressBegun) {
+                return;
+            }
+
+            track.HasLongTapProgressBegun = false;
+            handler.HandleLongTapProgress(CreateLongTapProgressEvent(track, handler, input, GestureEventPhase.Completed, duration));
+        }
+
+        /// <summary>
+        /// ロングタップ進捗をキャンセル通知
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="input">現在入力</param>
+        /// <param name="duration">開始からの経過時間</param>
+        private void CancelLongTapProgressIfNeeded(TapGestureTrack track, ITapGestureHandler handler, GesturePointerInput input, float duration) {
+            if (!track.HasLongTapProgressBegun) {
+                return;
+            }
+
+            track.HasLongTapProgressBegun = false;
+            handler.HandleLongTapProgress(CreateLongTapProgressEvent(track, handler, input, GestureEventPhase.Canceled, duration));
+        }
+
+        /// <summary>
+        /// ロングタップ進捗を保存済み入力状態からキャンセル通知
+        /// </summary>
+        /// <param name="track">対象トラック</param>
+        /// <param name="handler">対象ハンドラー</param>
+        /// <param name="currentTime">現在時刻</param>
+        private void CancelLongTapProgressIfNeeded(TapGestureTrack track, ITapGestureHandler handler, float currentTime) {
+            if (!track.HasLongTapProgressBegun) {
+                return;
+            }
+
+            track.HasLongTapProgressBegun = false;
+            handler.HandleLongTapProgress(CreateStoredLongTapProgressEvent(track, handler, GestureEventPhase.Canceled, currentTime));
         }
 
         /// <summary>

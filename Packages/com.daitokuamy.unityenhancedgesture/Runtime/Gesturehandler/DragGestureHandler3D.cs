@@ -37,6 +37,8 @@ namespace UnityEnhancedGesture {
         public event Action<DragGestureEvent> EndDragEvent;
         /// <summary>ドラッグキャンセル時に通知するイベント</summary>
         public event Action<DragGestureEvent> CancelDragEvent;
+        /// <summary>ロングタップドラッグ進捗時に通知するイベント</summary>
+        public event Action<LongTapDragProgressGestureEvent> LongTapDragProgressEvent;
 
         /// <inheritdoc/>
         public override bool CanHandle(Vector2 screenPosition, Camera eventCamera) {
@@ -73,6 +75,11 @@ namespace UnityEnhancedGesture {
         /// <inheritdoc/>
         public void HandleCancelDrag(DragGestureEvent gestureEvent) {
             CancelDragEvent?.Invoke(gestureEvent);
+        }
+
+        /// <inheritdoc/>
+        public void HandleLongTapDragProgress(LongTapDragProgressGestureEvent gestureEvent) {
+            LongTapDragProgressEvent?.Invoke(gestureEvent);
         }
     }
 }

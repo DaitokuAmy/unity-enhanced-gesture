@@ -183,6 +183,11 @@ namespace UnityEnhancedGesture {
                 pinchTrack.BeginGesture(center, distance, angle, currentTime);
                 pinchTrack.HasBegun = true;
                 pinchHandler.HandleBeginPinch(CreateEvent(pinchTrack, GestureEventPhase.Began, currentTime));
+
+                if (pinchTrack.IsCompleted) {
+                    return;
+                }
+
                 pinchTrack.PreviousCenter = center;
                 pinchTrack.PreviousDistance = distance;
                 pinchTrack.PreviousAngle = angle;
@@ -209,6 +214,18 @@ namespace UnityEnhancedGesture {
                 pinchTrack.PreviousDistance = distance;
                 pinchTrack.PreviousAngle = angle;
             }
+        }
+
+        /// <inheritdoc/>
+        public void CancelTrack(IGestureTrack track, float currentTime) {
+            var pinchTrack = (PinchGestureTrack)track;
+            var pinchHandler = (IPinchGestureHandler)pinchTrack.Handler;
+
+            if (pinchTrack.HasBegun) {
+                pinchHandler.HandleCancelPinch(CreateEvent(pinchTrack, GestureEventPhase.Canceled, currentTime));
+            }
+
+            pinchTrack.IsCompleted = true;
         }
 
         /// <summary>

@@ -37,5 +37,11 @@ namespace UnityEnhancedGesture {
         /// </summary>
         /// <param name="gestureEvent">イベント引数</param>
         void HandleLongTap(TapGestureEvent gestureEvent);
+
+        /// <summary>
+        /// ロングタップ進捗イベントを受け取る
+        /// </summary>
+        /// <param name="gestureEvent">イベント引数</param>
+        void HandleLongTapProgress(LongTapProgressGestureEvent gestureEvent);
     }
 }

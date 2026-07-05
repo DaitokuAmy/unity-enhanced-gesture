@@ -114,6 +114,7 @@ _dragGestureHandler.BeginDragEvent += evt =>
 
 - ドラッグ系の公開 API を持つ
 - `System.Action<DragGestureEvent>` 形式のイベントを公開する
+- ロングタップドラッグ判定の開始、進捗、完了、キャンセルを `System.Action<LongTapDragProgressGestureEvent>` 形式のイベントとして公開する
 - ドラッグ関連のシリアライズ設定を持つ
 - 同一 `RectTransform` 上で複数利用する場合、設定値は他の `DragGestureHandler` と一致している必要がある
 
@@ -128,6 +129,7 @@ _dragGestureHandler.BeginDragEvent += evt =>
 
 - タップ、ダブルタップ、ロングタップ系の公開 API を持つ
 - `System.Action<TapGestureEvent>` 形式のイベントを公開する
+- ロングタップ判定の開始、進捗、完了、キャンセルを `System.Action<LongTapProgressGestureEvent>` 形式のイベントとして公開する
 - タップ関連のシリアライズ設定を持つ
 - 同一 `RectTransform` 上で複数利用する場合、設定値は他の `TapGestureHandler` と一致している必要がある
 
@@ -167,10 +169,14 @@ _dragGestureHandler.BeginDragEvent += evt =>
   - `EnhancedTouch` から得た入力の内部表現とする
 - `DragGestureEvent`
   - ドラッグイベント引数
+- `LongTapDragProgressGestureEvent`
+  - ロングタップドラッグ進捗イベント引数
 - `PinchGestureEvent`
   - ピンチイベント引数
 - `TapGestureEvent`
   - タップイベント引数
+- `LongTapProgressGestureEvent`
+  - ロングタップ進捗イベント引数
 
 ## 処理フロー
 
@@ -284,6 +290,9 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - 開始時にイベント送信対象となった Handler は `GestureCoordinator` が入力系列単位で保持する
 - `Drag` の開始イベントを受けていない Handler に、`Drag` 中イベントや終了イベントを送らない
 - 開始イベントを送った Handler には、終了またはキャンセルまで後続イベントを確実に送る
+- Handler が無効化または登録解除された場合、その Handler に紐づく進行中 Track はキャンセルして以降の更新や完了イベントを送らない
+- `Drag` / `Pinch` は開始イベント送信済みの場合のみキャンセルイベントを送る
+- `Tap` や開始前の `Drag` / `Pinch` はキャンセルイベントを送らず破棄する
 - 後続イベントの配送先管理は `GestureCoordinator` の責務とする
 - 解析機はイベントデータ生成に寄せ、どの Handler へ配送するかの判断は `GestureCoordinator` 側で扱う
 - `GestureCoordinator` は生の `EnhancedTouch` や `Mouse` を直接解釈せず、入力解析インターフェースへ処理を委譲する
@@ -314,6 +323,8 @@ _dragGestureHandler.BeginDragEvent += evt =>
 - Runtime 追加対象は `Tap / Pinch / Drag(LongTapDrag)` とする
 - `Tap` は `SingleTap / DoubleTap / LongTap` を 1 つの recognizer で扱う
 - `Tap` の `DoubleTap` 有効時は、1 回目の単一タップ通知を即時送らず待機時間経過後に確定する
+- `LongTapProgressEvent` は `LongTapEvent` とは分け、`Began / Updated / Completed / Canceled` でロングタップ候補の進捗ライフサイクルを通知する
+- `LongTapEvent` は従来通りロングタップ確定時のみ通知する
 - `Pinch` は 2 pointer を 1 track が所有し、距離に加えて角度も event に含める
 - Editor の pinch simulation は `Alt + MouseDrag` を基準とする
 - 入力履歴サンプルは `GesturePointerSample(Position, ElapsedTime)` に統一する

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
@@ -216,6 +216,7 @@ RectTransform:
   - {fileID: 615442598}
   - {fileID: 1376162358}
   - {fileID: 429118336}
+  - {fileID: 56843304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -346,15 +347,162 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dba8640e66e48d2828da1bc8f39f0c6, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 53567094}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
+--- !u!1 &56843303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 56843304}
+  - component: {fileID: 56843305}
+  - component: {fileID: 56843306}
+  m_Layer: 5
+  m_Name: ProgressGauge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &56843304
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56843303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 65085760}
+  - {fileID: 759943275}
+  m_Father: {fileID: 9091529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 128, y: 32}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &56843305
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56843303}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &56843306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56843303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891f60f51a334d4cb09ab758197b4227, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SampleLongTapDragProgressGauge
+  _dragGestureHandlers: []
+  _findHandlersOnAwake: 1
+  _canvas: {fileID: 9091528}
+  _gaugeRectTransform: {fileID: 56843304}
+  _canvasGroup: {fileID: 56843305}
+  _progressImage: {fileID: 759943276}
+  _screenOffset: {x: 0, y: 48}
+  _clampToCanvas: 1
+--- !u!1 &65085759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 65085760}
+  - component: {fileID: 65085762}
+  - component: {fileID: 65085761}
+  m_Layer: 5
+  m_Name: Base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &65085760
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65085759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 56843304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &65085761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65085759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.08, g: 0.09, b: 0.1, a: 0.7}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 0ef65e6c66934b909836219b61f78a99, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &65085762
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65085759}
+  m_CullTransparentMesh: 1
 --- !u!1 &147207689
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,11 +629,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 147207691}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &155316002
 GameObject:
@@ -660,11 +809,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 155324849}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &167649371
 GameObject:
@@ -792,11 +942,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 167649373}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &212957271
 GameObject:
@@ -924,11 +1075,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 212957273}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &263923803
 GameObject:
@@ -1056,11 +1208,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 263923805}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &285784538
 GameObject:
@@ -1188,11 +1341,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 285784540}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &301612204
 GameObject:
@@ -1320,11 +1474,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 301612206}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &312201373
 GameObject:
@@ -1452,11 +1607,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 312201375}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &329021354
 GameObject:
@@ -1584,11 +1740,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 329021356}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &330585543
 GameObject:
@@ -1965,11 +2122,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 375402898}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &380649414
 GameObject:
@@ -2097,11 +2255,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 380649416}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &395127515
 GameObject:
@@ -2229,11 +2388,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 395127517}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &410087039
 GameObject:
@@ -2563,11 +2723,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 519573938}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &615442597
 GameObject:
@@ -2618,6 +2779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandlerUI
   _priority: 0
+  _isBlockedByUI: 1
   _targetRectTransform: {fileID: 615442598}
   _dragStartThreshold: 12
   _enableLongTapDrag: 0
@@ -2749,11 +2911,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 702665198}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &706555992
 GameObject:
@@ -2881,11 +3044,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 706555994}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &726679161
 GameObject:
@@ -2919,6 +3083,81 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 772377144}
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!1 &759943274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 759943275}
+  - component: {fileID: 759943277}
+  - component: {fileID: 759943276}
+  m_Layer: 5
+  m_Name: Gauge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &759943275
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759943274}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 56843304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &759943276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759943274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.05, g: 0.72, b: 0.92, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 0ef65e6c66934b909836219b61f78a99, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &759943277
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759943274}
+  m_CullTransparentMesh: 1
 --- !u!1 &772377143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3094,11 +3333,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 773530060}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &832575517
 GameObject:
@@ -3275,11 +3515,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 898384031}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &966877546
 GameObject:
@@ -3407,11 +3648,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 966877548}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1029870730
 GameObject:
@@ -3539,11 +3781,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1029870732}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1130010981
 GameObject:
@@ -3671,11 +3914,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1130010983}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1185650201
 GameObject:
@@ -3803,11 +4047,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1185650203}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1196762936
 GameObject:
@@ -3935,11 +4180,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1196762938}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1231136222
 GameObject:
@@ -4067,11 +4313,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1231136224}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1263179916
 GameObject:
@@ -4199,11 +4446,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1263179918}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1263560681
 GameObject:
@@ -4331,11 +4579,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1263560683}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1287529074
 GameObject:
@@ -4463,11 +4712,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1287529076}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1345788468
 GameObject:
@@ -4595,11 +4845,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1345788470}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1364713472
 GameObject:
@@ -4727,11 +4978,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1364713474}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1376162357
 GameObject:
@@ -4782,6 +5034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.PinchGestureHandlerUI
   _priority: 0
+  _isBlockedByUI: 1
   _targetRectTransform: {fileID: 1376162358}
   _pinchStartThreshold: 8
 --- !u!1 &1417639247
@@ -4910,11 +5163,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1417639249}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1443942612
 GameObject:
@@ -5042,11 +5296,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1443942614}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1464135161
 GameObject:
@@ -5174,11 +5429,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1464135163}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1553187543
 GameObject:
@@ -5306,11 +5562,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1553187545}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1563705955
 GameObject:
@@ -5438,11 +5695,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1563705957}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1565568820
 GameObject:
@@ -5570,11 +5828,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1565568822}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1589654734
 GameObject:
@@ -5702,11 +5961,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1589654736}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1599033980
 GameObject:
@@ -5834,11 +6094,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1599033982}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1712870612
 GameObject:
@@ -5966,11 +6227,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1712870614}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1736161952
 GameObject:
@@ -6098,11 +6360,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1736161954}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1790817043
 GameObject:
@@ -6230,11 +6493,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1790817045}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1815269534
 GameObject:
@@ -6444,11 +6708,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1848186084}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1903948543
 GameObject:
@@ -6655,11 +6920,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1936262394}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1945481146
 GameObject:
@@ -6787,11 +7053,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1945481148}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &1968022665
 GameObject:
@@ -6919,11 +7186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 1968022667}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &2001449433
 GameObject:
@@ -7051,11 +7319,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 2001449435}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &2030691506
 GameObject:
@@ -7183,11 +7452,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 2030691508}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &2056621632
 GameObject:
@@ -7315,11 +7585,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 2056621634}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &2116519259
 GameObject:
@@ -7447,11 +7718,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 2116519261}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &2125198687
 GameObject:
@@ -7579,11 +7851,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 2125198689}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!1 &2131370020
 GameObject:
@@ -7711,11 +7984,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEnhancedGesture::UnityEnhancedGesture.DragGestureHandler3D
   _priority: 1
+  _isBlockedByUI: 1
   _targetColliders:
   - {fileID: 2131370022}
-  _dragStartThreshold: 12
+  _dragStartThreshold: 10000
   _enableLongTapDrag: 1
-  _longTapDragDuration: 0.5
+  _longTapDragDuration: 1.5
   _longTapDragMaxMovement: 12
 --- !u!114 &2131370026
 MonoBehaviour:
