@@ -183,7 +183,7 @@ namespace UnityEnhancedGesture {
 
             tapTrack.UpdateLastInput(input);
 
-            var duration = input.Time - tapTrack.ActiveStartTime;
+            var duration = Mathf.Max(0.0f, currentTime - tapTrack.ActiveStartTime);
             var movement = Vector2.Distance(tapTrack.ActiveStartPosition, input.Position);
             var canBecomeTap = movement <= tapHandler.MaxTapMovement && duration <= tapHandler.MaxTapDuration;
 
@@ -230,7 +230,7 @@ namespace UnityEnhancedGesture {
                 tapTrack.IsCompleted = true;
                 tapTrack.ClearPointer();
                 CompleteLongTapProgressIfNeeded(tapTrack, tapHandler, input, duration);
-                tapHandler.HandleLongTap(CreateCurrentTapEvent(tapTrack, input, TapGestureType.LongTap, 1, 0.0f));
+                tapHandler.HandleLongTap(CreateCurrentTapEvent(tapTrack, input, TapGestureType.LongTap, 1, duration, 0.0f));
                 return;
             }
 
@@ -263,6 +263,7 @@ namespace UnityEnhancedGesture {
                     input,
                     TapGestureType.DoubleTap,
                     2,
+                    duration,
                     input.StartTime - tapTrack.FirstTapCompletedTime));
                 tapTrack.IsCompleted = true;
                 tapTrack.ClearPointer();
@@ -270,7 +271,7 @@ namespace UnityEnhancedGesture {
             }
 
             if (!tapHandler.EnableDoubleTap) {
-                tapHandler.HandleTap(CreateCurrentTapEvent(tapTrack, input, TapGestureType.SingleTap, 1, 0.0f));
+                tapHandler.HandleTap(CreateCurrentTapEvent(tapTrack, input, TapGestureType.SingleTap, 1, duration, 0.0f));
                 tapTrack.IsCompleted = true;
                 tapTrack.ClearPointer();
                 return;
@@ -296,9 +297,16 @@ namespace UnityEnhancedGesture {
         /// <param name="input">現在入力</param>
         /// <param name="type">タップ種別</param>
         /// <param name="tapCount">タップ回数</param>
+        /// <param name="duration">継続時間</param>
         /// <param name="interval">前回タップからの間隔</param>
         /// <returns>生成したイベント引数</returns>
-        private TapGestureEvent CreateCurrentTapEvent(TapGestureTrack track, GesturePointerInput input, TapGestureType type, int tapCount, float interval) {
+        private TapGestureEvent CreateCurrentTapEvent(
+            TapGestureTrack track,
+            GesturePointerInput input,
+            TapGestureType type,
+            int tapCount,
+            float duration,
+            float interval) {
             var firstTapPosition = tapCount > 1 ? track.FirstTapPosition : track.ActiveStartPosition;
             return new TapGestureEvent(
                 type,
@@ -307,7 +315,7 @@ namespace UnityEnhancedGesture {
                 track.ActiveStartPosition,
                 input.Position,
                 input.Samples,
-                input.Time - track.ActiveStartTime,
+                duration,
                 interval,
                 track.EventCamera);
         }

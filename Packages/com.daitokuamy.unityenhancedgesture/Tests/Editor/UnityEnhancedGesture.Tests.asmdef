@@ -1,0 +1,21 @@
+{
+    "name": "UnityEnhancedGesture.Tests",
+    "rootNamespace": "UnityEnhancedGesture.Tests",
+    "references": [
+        "UnityEnhancedGesture"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

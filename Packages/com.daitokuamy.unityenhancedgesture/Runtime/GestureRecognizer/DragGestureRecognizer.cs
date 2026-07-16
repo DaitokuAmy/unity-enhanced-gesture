@@ -112,7 +112,7 @@ namespace UnityEnhancedGesture {
 
             dragTrack.UpdateLastInput(input, inputsByPointerId.Count);
 
-            var elapsedTime = input.Time - dragTrack.StartTime;
+            var elapsedTime = Mathf.Max(0.0f, currentTime - dragTrack.StartTime);
             var totalDistance = Vector2.Distance(dragTrack.StartPosition, input.Position);
             var sentDragEvent = false;
             var sentLongTapDragProgressBegan = false;
@@ -156,14 +156,14 @@ namespace UnityEnhancedGesture {
                     return;
                 }
 
-                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began, inputsByPointerId.Count));
+                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began, elapsedTime, inputsByPointerId.Count));
 
                 if (dragTrack.IsCompleted) {
                     return;
                 }
 
                 if (input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
-                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, inputsByPointerId.Count));
+                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, elapsedTime, inputsByPointerId.Count));
                     sentDragEvent = true;
 
                     if (dragTrack.IsCompleted) {
@@ -181,14 +181,14 @@ namespace UnityEnhancedGesture {
 
                 dragTrack.HasBegun = true;
                 dragTrack.StartMode = DragGestureStartMode.Immediate;
-                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began, inputsByPointerId.Count));
+                dragHandler.HandleBeginDrag(CreateEvent(dragTrack, input, GestureEventPhase.Began, elapsedTime, inputsByPointerId.Count));
 
                 if (dragTrack.IsCompleted) {
                     return;
                 }
 
                 if (input.Phase == GestureInputPhase.Moved && input.Delta != Vector2.zero) {
-                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, inputsByPointerId.Count));
+                    dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, elapsedTime, inputsByPointerId.Count));
                     sentDragEvent = true;
 
                     if (dragTrack.IsCompleted) {
@@ -199,7 +199,7 @@ namespace UnityEnhancedGesture {
 
             if (input.Phase == GestureInputPhase.Canceled) {
                 if (dragTrack.HasBegun) {
-                    dragHandler.HandleCancelDrag(CreateEvent(dragTrack, input, GestureEventPhase.Canceled, inputsByPointerId.Count));
+                    dragHandler.HandleCancelDrag(CreateEvent(dragTrack, input, GestureEventPhase.Canceled, elapsedTime, inputsByPointerId.Count));
                 } else {
                     CancelLongTapDragProgressIfNeeded(dragTrack, dragHandler, input, elapsedTime);
                 }
@@ -210,7 +210,7 @@ namespace UnityEnhancedGesture {
 
             if (input.Phase == GestureInputPhase.Ended) {
                 if (dragTrack.HasBegun) {
-                    dragHandler.HandleEndDrag(CreateEvent(dragTrack, input, GestureEventPhase.Completed, inputsByPointerId.Count));
+                    dragHandler.HandleEndDrag(CreateEvent(dragTrack, input, GestureEventPhase.Completed, elapsedTime, inputsByPointerId.Count));
                 } else {
                     CancelLongTapDragProgressIfNeeded(dragTrack, dragHandler, input, elapsedTime);
                 }
@@ -234,7 +234,7 @@ namespace UnityEnhancedGesture {
                 && !sentDragEvent
                 && input.Phase == GestureInputPhase.Moved
                 && input.Delta != Vector2.zero) {
-                dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, inputsByPointerId.Count));
+                dragHandler.HandleDrag(CreateEvent(dragTrack, input, GestureEventPhase.Updated, elapsedTime, inputsByPointerId.Count));
             }
         }
 
@@ -246,7 +246,7 @@ namespace UnityEnhancedGesture {
             CancelLongTapDragProgressIfNeeded(dragTrack, dragHandler, currentTime);
 
             if (dragTrack.HasBegun) {
-                dragHandler.HandleCancelDrag(CreateStoredEvent(dragTrack, GestureEventPhase.Canceled));
+                dragHandler.HandleCancelDrag(CreateStoredEvent(dragTrack, GestureEventPhase.Canceled, currentTime));
             }
 
             dragTrack.IsCompleted = true;
@@ -258,9 +258,15 @@ namespace UnityEnhancedGesture {
         /// <param name="track">対象トラック</param>
         /// <param name="input">現在入力</param>
         /// <param name="phase">イベントフェーズ</param>
+        /// <param name="duration">開始からの経過時間</param>
         /// <param name="activePointerCount">現在有効なポインター数</param>
         /// <returns>生成したイベント引数</returns>
-        private DragGestureEvent CreateEvent(DragGestureTrack track, GesturePointerInput input, GestureEventPhase phase, int activePointerCount) {
+        private DragGestureEvent CreateEvent(
+            DragGestureTrack track,
+            GesturePointerInput input,
+            GestureEventPhase phase,
+            float duration,
+            int activePointerCount) {
             return new DragGestureEvent(
                 phase,
                 track.StartMode,
@@ -269,7 +275,7 @@ namespace UnityEnhancedGesture {
                 input.Delta,
                 input.Position - track.StartPosition,
                 input.Samples,
-                input.Time - track.StartTime,
+                duration,
                 activePointerCount,
                 track.EventCamera);
         }
@@ -279,8 +285,9 @@ namespace UnityEnhancedGesture {
         /// </summary>
         /// <param name="track">対象トラック</param>
         /// <param name="phase">イベントフェーズ</param>
+        /// <param name="currentTime">現在時刻</param>
         /// <returns>生成したイベント引数</returns>
-        private DragGestureEvent CreateStoredEvent(DragGestureTrack track, GestureEventPhase phase) {
+        private DragGestureEvent CreateStoredEvent(DragGestureTrack track, GestureEventPhase phase, float currentTime) {
             return new DragGestureEvent(
                 phase,
                 track.StartMode,
@@ -289,7 +296,7 @@ namespace UnityEnhancedGesture {
                 track.LastDelta,
                 track.LastPosition - track.StartPosition,
                 track.LastSamples,
-                track.LastTime - track.StartTime,
+                Mathf.Max(0.0f, currentTime - track.StartTime),
                 track.LastActivePointerCount,
                 track.EventCamera);
         }
