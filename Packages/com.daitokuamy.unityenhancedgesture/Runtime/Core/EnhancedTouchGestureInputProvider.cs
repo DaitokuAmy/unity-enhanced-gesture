@@ -212,7 +212,11 @@ namespace UnityEnhancedGesture {
                     (float)(historyTouch.time - touch.startTime));
             }
 
-            AppendSampleIfNeeded(samples, touch.screenPosition, (float)(touch.time - touch.startTime));
+            AppendSampleIfNeeded(
+                samples,
+                touch.screenPosition,
+                (float)(touch.time - touch.startTime),
+                touch.phase == InputTouchPhase.Ended);
             return samples.ToArray();
         }
 
@@ -391,8 +395,15 @@ namespace UnityEnhancedGesture {
         /// <param name="samples">追加先サンプル一覧</param>
         /// <param name="position">サンプル位置</param>
         /// <param name="elapsedTime">開始からの経過時間</param>
-        private void AppendSampleIfNeeded(List<GesturePointerSample> samples, Vector2 position, float elapsedTime) {
-            if (samples.Count > 0 && samples[samples.Count - 1].Position == position) {
+        /// <param name="allowDuplicatePosition">同一位置の追加を許可するかどうか</param>
+        private void AppendSampleIfNeeded(
+            List<GesturePointerSample> samples,
+            Vector2 position,
+            float elapsedTime,
+            bool allowDuplicatePosition = false) {
+            if (!allowDuplicatePosition
+                && samples.Count > 0
+                && samples[samples.Count - 1].Position == position) {
                 return;
             }
 

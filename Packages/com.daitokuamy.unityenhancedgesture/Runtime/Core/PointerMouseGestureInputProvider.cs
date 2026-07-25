@@ -73,7 +73,11 @@ namespace UnityEnhancedGesture {
                 return;
             }
 
-            AppendSampleIfNeeded(_primarySamples, position, time - _startTime);
+            AppendSampleIfNeeded(
+                _primarySamples,
+                position,
+                time - _startTime,
+                mouse.leftButton.wasReleasedThisFrame);
 
             if (_isSimulatingPinch) {
                 ProcessPinchSimulation(results, mouse, position, delta, time, isAltPressed);
@@ -319,8 +323,15 @@ namespace UnityEnhancedGesture {
         /// <param name="samples">追加先サンプル一覧</param>
         /// <param name="position">サンプル位置</param>
         /// <param name="elapsedTime">開始からの経過時間</param>
-        private void AppendSampleIfNeeded(List<GesturePointerSample> samples, Vector2 position, float elapsedTime) {
-            if (samples.Count > 0 && samples[samples.Count - 1].Position == position) {
+        /// <param name="allowDuplicatePosition">同一位置の追加を許可するかどうか</param>
+        private void AppendSampleIfNeeded(
+            List<GesturePointerSample> samples,
+            Vector2 position,
+            float elapsedTime,
+            bool allowDuplicatePosition = false) {
+            if (!allowDuplicatePosition
+                && samples.Count > 0
+                && samples[samples.Count - 1].Position == position) {
                 return;
             }
 
